@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace RAT_Lab
 {
-    public partial class Form1 : Form
+    public partial class FormCaptcha : Form
     {
-        public Form1()
+        public FormCaptcha()
         {
             InitializeComponent();
         }
