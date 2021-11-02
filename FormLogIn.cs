@@ -90,12 +90,13 @@ namespace DataBaseApp
 		private async void captcha()
         {
 			panelCaptcha.Visible = true;
-
-			if (loginAttempt >= 1)
+			generateCaptcha();
+			if (loginAttempt != 0)
 			{
 				labelOneMoreStep.ForeColor = darkRed;
 				labelOneMoreStep.Text = "INVALID DATA";
 				labelMessage.Text = "The entrance will be unlocked after 10 seconds.";
+				
 				panelUnderText.Visible = false;
 				btnCheckCaptcha.Visible = false;
 				btnRefreshCaptcha.Visible = false;
@@ -108,24 +109,21 @@ namespace DataBaseApp
 
 				await Task.Run(() =>
 				{
-					Thread.Sleep(5000);
+					Thread.Sleep(10000);
 				});
-				;
 
-				panelCaptcha.Visible = false;
 				stepNumber = 1;
 
+				panelUnderText.Visible = true;
 				btnCheckCaptcha.Visible = true;
 				btnRefreshCaptcha.Visible = true;
-				labelCaptcha.Visible = true;
-				labelMessage.Visible = true;
-
+				labelCaptcha.Visible = true;			
 			}
 
 			txtEnterCaptchaHere.ForeColor = lightGrey;
 			txtEnterCaptchaHere.Text = ENTER_CAPTCHA_HERE;
 
-			generateCaptcha();
+			
 
 			btnCheckCaptcha.Enabled = false;
 			btnCheckCaptcha.BackColor = colorButtonDiactivateBG;
@@ -157,40 +155,6 @@ namespace DataBaseApp
 
 			labelCaptcha.Text = cptch;
 		}
-
-
-		/*
-				private async void showLoader()
-				{
-					labelLog.Visible = false;
-					panelDataToEnter.Visible = false;
-					buttonNextStep.Visible = false;
-
-					await Task.Delay(1000);
-
-					labelLog.Visible = true;
-					panelDataToEnter.Visible = true;
-					buttonNextStep.Visible = true;
-
-
-
-				}*/
-		/*
-		 if (loginAttempt >= 1)
-                {
-					//MessageBox.Show("await 10 seconds to try again");
-					labelLog.Text = "await 10 seconds to try again";
-					textBoxDataToEnter.Enabled = false;
-					buttonNextStep.Enabled = false;
-
-					Thread.Sleep(10000);
-					await Task.Delay(10000);
-
-					labelLog.Text = "try again";
-					textBoxDataToEnter.Enabled = false;
-					buttonNextStep.Enabled = false;
-				}
-		 */
 
 		private void openDB()
 		{
@@ -327,7 +291,10 @@ namespace DataBaseApp
 			if (!(labelCaptcha.Text == txtEnterCaptchaHere.Text))
 			{
 				labelOneMoreStep.Text = "TRY AGAIN";
-				labelOneMoreStep.ForeColor = Color.DarkRed;
+				labelOneMoreStep.ForeColor = darkRed;
+				labelMessage.Text = "Please complete the security check to access RatLaboratory";
+				txtEnterCaptchaHere.ForeColor = bgGrey;
+				txtEnterCaptchaHere.Text = ENTER_CAPTCHA_HERE;
 				generateCaptcha();
 			}
 		}
@@ -342,6 +309,7 @@ namespace DataBaseApp
         private void txtEnterCaptchaHere_Click(object sender, EventArgs e)
         {
 			txtEnterCaptchaHere.Text = "";
+			txtEnterCaptchaHere.ForeColor = darkGrey;
 		}
 
         private void txtEnterCaptchaHere_KeyDown(object sender, KeyEventArgs e)
