@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBank.cs" />
     <Compile Include="FormCaptcha.cs">
       <SubType>Form</SubType>
     </Compile>

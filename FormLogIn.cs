@@ -11,34 +11,13 @@ using System.Windows.Forms;
 using TestDBapp;
 using System.Data.Sql;
 using RAT_Lab;
+using static RAT_Lab.DataBank;
 
 namespace DataBaseApp
 {	
 	public partial class FormLogIn : Form
 	{
-		const string USERNAME_P = "root";
-		const string PASSWORD_P = "1339";
-
-		const string EMPTY_STRING = "";
-		const string ERROR_TRY_AGAIN = "try again";
-		const string ERROR_INCORRECT_PASSWORD = "incorrect password try again";
-		const string INFO_ENTER_USERNAME = "enter username";
-		const string INFO_ENTER_PASSWORD = "enter password";
-
-		int stepNumber = 1;
-		int loginAttempt = 0;
-
-		string username = "";
-		string password = "";
-
-		private static readonly Color darkRed = Color.FromArgb(224, 96, 85);
-		private static readonly Color basicBlue = Color.FromArgb(33, 150, 243);
-		private static readonly Color bgGrey = Color.FromArgb(237, 237, 237);
-		private static readonly Color lightGrey = Color.FromArgb(233, 236, 239);
-
-		private static readonly Color colorButtonActivateBG = Color.FromArgb(33, 150, 243);
-		private static readonly Color colorButtonDiactivateBG = Color.FromArgb(108, 117, 125);
-
+		
 		public FormLogIn()
 		{
 			InitializeComponent();
