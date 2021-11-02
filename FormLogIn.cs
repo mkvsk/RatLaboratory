@@ -13,8 +13,7 @@ using System.Data.Sql;
 using RAT_Lab;
 
 namespace DataBaseApp
-
-{
+{	
 	public partial class FormLogIn : Form
 	{
 		const string USERNAME_P = "root";
@@ -27,6 +26,8 @@ namespace DataBaseApp
 		const string INFO_ENTER_PASSWORD = "enter password";
 
 		int stepNumber = 1;
+		int loginAttempt = 0;
+
 		string username = "";
 		string password = "";
 
@@ -79,7 +80,7 @@ namespace DataBaseApp
 				}
 			}
 			else if (stepNumber == 2)
-			{				
+			{
 				showLoader();
 			}
 		}
@@ -98,10 +99,17 @@ namespace DataBaseApp
 			buttonNextStep.Visible = true;
 			Loader.Visible = false;
 
+
 			if (password.Equals(PASSWORD_P))
-			{
+			{	
 				stepNumber = 3;
-				openCaptcha();
+
+				if (loginAttempt >= 1)
+				{
+					openCaptcha();
+				}
+
+				//openDB();
 			}
 			else
 			{
@@ -111,12 +119,26 @@ namespace DataBaseApp
 				buttonNextStep_diactivate();
 
 				stepNumber = 2;
+
+				if (loginAttempt >= 1)
+				{
+					openCaptcha();
+				}
+				loginAttempt++;
 			}
+		}
+
+
+		private void openDB()
+		{
+			this.Hide();
+			FormMain newForm = new FormMain();
+			newForm.Show();
 		}
 
 		private void openCaptcha()
 		{
-			//this.Hide();
+			this.Hide();
 			FormCaptcha newForm = new FormCaptcha();
 			newForm.Show();
 		}
@@ -146,7 +168,11 @@ namespace DataBaseApp
 
 		private void textBoxDataToEnter_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			if (!((e.KeyChar >= 'A' && e.KeyChar <= 'Z') || (e.KeyChar >= 'a' && e.KeyChar <= 'z') || (e.KeyChar >= '0' && e.KeyChar <= '9') || e.KeyChar == '_' || e.KeyChar == (char)Keys.Back))
+			if (!((e.KeyChar >= 'A' && e.KeyChar <= 'Z') 
+				|| (e.KeyChar >= 'a' && e.KeyChar <= 'z') 
+				|| (e.KeyChar >= '0' && e.KeyChar <= '9') 
+				|| e.KeyChar == '_' 
+				|| e.KeyChar == (char)Keys.Back))
 			{
 				e.Handled = true;
 			}

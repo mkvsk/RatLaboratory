@@ -61,9 +61,10 @@ namespace RAT_Lab
             this.labelMessage.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.labelMessage.Location = new System.Drawing.Point(56, 46);
             this.labelMessage.Name = "labelMessage";
-            this.labelMessage.Size = new System.Drawing.Size(403, 21);
+            this.labelMessage.Size = new System.Drawing.Size(403, 42);
             this.labelMessage.TabIndex = 3;
-            this.labelMessage.Text = "Please complete the security check to access RatLaboratory";
+            this.labelMessage.Text = "You entered incorrect data again.\r\nPlease complete the security check to access R" +
+    "atLaboratory";
             this.labelMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnCheckCaptcha
@@ -144,7 +145,7 @@ namespace RAT_Lab
             this.labelCaptcha.Font = new System.Drawing.Font("Chiller", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCaptcha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
             this.labelCaptcha.Image = ((System.Drawing.Image)(resources.GetObject("labelCaptcha.Image")));
-            this.labelCaptcha.Location = new System.Drawing.Point(116, 87);
+            this.labelCaptcha.Location = new System.Drawing.Point(116, 102);
             this.labelCaptcha.MaximumSize = new System.Drawing.Size(280, 58);
             this.labelCaptcha.MinimumSize = new System.Drawing.Size(280, 58);
             this.labelCaptcha.Name = "labelCaptcha";

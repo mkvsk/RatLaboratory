@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataBaseApp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,7 +39,6 @@ namespace RAT_Lab
 
             btnCheckCaptcha.Enabled = false;
             btnCheckCaptcha.BackColor = colorButtonDiactivateBG;
-
         }
 
         private void generateCaptcha()
@@ -67,18 +67,17 @@ namespace RAT_Lab
             labelCaptcha.Text = captcha;
         }
 
-        private void openDB()
-        {
-            this.Hide();
-            FormMain newForm = new FormMain();
-            newForm.Show();
-        }
-
         private void btnCheckCaptcha_Click(object sender, EventArgs e)
         {
             if (labelCaptcha.Text == txtEnterCaptchaHere.Text)
             {
-                openDB();
+                this.Hide();              
+            }
+            if (!(labelCaptcha.Text == txtEnterCaptchaHere.Text))
+            {
+                this.Close();
+                FormLogIn newForm = new FormLogIn();
+                newForm.Show();
             }
         }
 
@@ -97,6 +96,12 @@ namespace RAT_Lab
         private void txtEnterCaptchaHere_KeyDown(object sender, KeyEventArgs e)
         {
             txtEnterCaptchaHere.ForeColor = darkGrey;
+           
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnCheckCaptcha.Focus();
+                btnCheckCaptcha_Click(sender, e);
+            }
         }
 
         private void txtEnterCaptchaHere_KeyPress(object sender, KeyPressEventArgs e)
