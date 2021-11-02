@@ -50,12 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBank.cs" />
-    <Compile Include="FormCaptcha.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormCaptcha.Designer.cs">
-      <DependentUpon>FormCaptcha.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormLogIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,9 +64,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormCaptcha.resx">
-      <DependentUpon>FormCaptcha.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormLogIn.resx">
       <DependentUpon>FormLogIn.cs</DependentUpon>
       <SubType>Designer</SubType>

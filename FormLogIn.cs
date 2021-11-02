@@ -11,14 +11,15 @@ using System.Windows.Forms;
 using TestDBapp;
 using System.Data.Sql;
 using RAT_Lab;
+using static TestDBapp.FormMain;
 using static RAT_Lab.DataBank;
 
 namespace DataBaseApp
 {	
 	public partial class FormLogIn : Form
 	{
-		FormMain formMain;
-		FormCaptcha formCaptcha;
+		private int stepNumber = 1;
+		private int loginAttempt = 0;
 
 		public FormLogIn()
 		{
@@ -37,27 +38,22 @@ namespace DataBaseApp
 			buttonNextStep.BackColor = colorButtonActivateBG;
 		}
 
-		private async void buttonNextStep_Click(object sender, EventArgs e)
-		{	
-			
+		private void buttonNextStep_Click(object sender, EventArgs e)
+		{
 			if (stepNumber == 1)
 			{	
-				if (loginAttempt >= 1)
-                {
-					//MessageBox.Show("await 10 seconds to try again");
-					labelLog.Text = "await 10 seconds to try again";
-					textBoxDataToEnter.Enabled = false;
-					buttonNextStep.Enabled = false;
-
-					Thread.Sleep(10000);
-					await Task.Delay(10000);
-
-					labelLog.Text = "try again";
-					textBoxDataToEnter.Enabled = false;
-					buttonNextStep.Enabled = false;
-				}
 				username = textBoxDataToEnter.Text;
 
+				if(loginAttempt != 0)
+                {
+					labelLog.Text = "The entrance will be unlocked after 10 seconds.";
+					panelAllElements.Visible = false;
+
+					blockEntry();
+
+					panelAllElements.Visible = true;
+					labelLog.Text = "QQQ";
+				}
 				if ((!(username.Equals(USERNAME_P)) || (username.Equals(INFO_ENTER_USERNAME))))
 				{
 					textBoxDataToEnter.Text = ERROR_TRY_AGAIN;
@@ -78,7 +74,7 @@ namespace DataBaseApp
 			{
 				if (loginAttempt >= 1)
 				{
-					openCaptcha();
+					captcha();					
 				}
 
 				if (password.Equals(PASSWORD_P))
@@ -99,36 +95,91 @@ namespace DataBaseApp
 				}
 			}
 		}
-/*
-		private async void showLoader()
-		{
-			labelLog.Visible = false;
-			panelDataToEnter.Visible = false;
-			buttonNextStep.Visible = false;
 
-			await Task.Delay(1000);
+		private async void blockEntry()
+        {
+			await Task.Delay(10000);
+		}
 
-			labelLog.Visible = true;
-			panelDataToEnter.Visible = true;
-			buttonNextStep.Visible = true;
-
-
+		private void captcha()
+        {
+			panelCaptcha.Visible = true;
 			
-		}*/
+			txtEnterCaptchaHere.ForeColor = lightGrey;
+			txtEnterCaptchaHere.Text = ENTER_CAPTCHA_HERE;
 
+			generateCaptcha();
+
+			btnCheckCaptcha.Enabled = false;
+			btnCheckCaptcha.BackColor = colorButtonDiactivateBG;
+		}
+
+		private void generateCaptcha()
+		{
+			Random rand = new Random();
+			int num = rand.Next(6, 8);
+			string cptch = "";
+			int total = 0;
+			do
+			{
+				int chr = rand.Next(48, 123);
+
+				if ((chr >= 48 && chr <= 57)
+					|| (chr >= 65 && chr <= 90)
+					|| (chr >= 97 && chr <= 122))
+				{
+					cptch += (char)chr;
+					total++;
+
+					if (total == num)
+					{
+						break;
+					}
+				}
+			} while (true);
+
+			labelCaptcha.Text = cptch;
+		}
+
+
+		/*
+				private async void showLoader()
+				{
+					labelLog.Visible = false;
+					panelDataToEnter.Visible = false;
+					buttonNextStep.Visible = false;
+
+					await Task.Delay(1000);
+
+					labelLog.Visible = true;
+					panelDataToEnter.Visible = true;
+					buttonNextStep.Visible = true;
+
+
+
+				}*/
+		/*
+		 if (loginAttempt >= 1)
+                {
+					//MessageBox.Show("await 10 seconds to try again");
+					labelLog.Text = "await 10 seconds to try again";
+					textBoxDataToEnter.Enabled = false;
+					buttonNextStep.Enabled = false;
+
+					Thread.Sleep(10000);
+					await Task.Delay(10000);
+
+					labelLog.Text = "try again";
+					textBoxDataToEnter.Enabled = false;
+					buttonNextStep.Enabled = false;
+				}
+		 */
 
 		private void openDB()
 		{
 			this.Hide();
 			FormMain formMain = new FormMain();
 			formMain.Show();
-		}
-
-		private void openCaptcha()
-		{
-			this.Hide();
-			FormCaptcha formCaptcha = new FormCaptcha();
-			formCaptcha.Show();
 		}
 
 		private void textBoxDataToEnter_Click(object sender, EventArgs e)
@@ -192,13 +243,14 @@ namespace DataBaseApp
 
 		private void FormLogIn_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//this.Hide();
 			Application.Exit();
 		}
 
 		private void FormLogIn_Load(object sender, EventArgs e)
 		{
 			buttonNextStep_diactivate();
+			panelCaptcha.Visible = false;
+			loginAttempt = 0;
 		}
 
 		public class User
@@ -234,5 +286,70 @@ namespace DataBaseApp
             }
 
 		}
-	}
+
+        private void btnCheckCaptcha_Click(object sender, EventArgs e)
+        {
+			if (labelCaptcha.Text == txtEnterCaptchaHere.Text)
+			{
+				if (stepNumber == 3)
+				{
+                    FormMain formMain = new FormMain();
+                    formMain.Show();
+                    this.Hide();
+                }
+				if (stepNumber == 1 || stepNumber == 2)
+				{
+					stepNumber = 1;
+					loginAttempt++;
+
+					// TO DO ******************************************************
+
+					panelCaptcha.Visible = false;
+				}
+			}
+			if (!(labelCaptcha.Text == txtEnterCaptchaHere.Text))
+			{
+				labelOneMoreStep.Text = "try again";
+				labelOneMoreStep.ForeColor = Color.DarkRed;
+				generateCaptcha();
+			}
+		}
+
+        private void btnRefreshCaptcha_Click(object sender, EventArgs e)
+        {
+			txtEnterCaptchaHere.ForeColor = bgGrey;
+			txtEnterCaptchaHere.Text = ENTER_CAPTCHA_HERE;
+			generateCaptcha();
+		}
+
+        private void txtEnterCaptchaHere_Click(object sender, EventArgs e)
+        {
+			txtEnterCaptchaHere.Text = "";
+		}
+
+        private void txtEnterCaptchaHere_KeyDown(object sender, KeyEventArgs e)
+        {
+			txtEnterCaptchaHere.ForeColor = darkGrey;
+
+			if (e.KeyCode == Keys.Enter)
+			{
+				btnCheckCaptcha.Focus();
+				btnCheckCaptcha_Click(sender, e);
+			}
+		}
+
+        private void txtEnterCaptchaHere_KeyPress(object sender, KeyPressEventArgs e)
+        {
+			if (txtEnterCaptchaHere.Text.Length >= 5)
+			{
+				btnCheckCaptcha.Enabled = true;
+				btnCheckCaptcha.BackColor = colorButtonActivateBG;
+			}
+			if (txtEnterCaptchaHere.Text.Length < 5)
+			{
+				btnCheckCaptcha.Enabled = false;
+				btnCheckCaptcha.BackColor = colorButtonDiactivateBG;
+			}
+		}
+    }
 }

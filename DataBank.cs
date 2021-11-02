@@ -17,9 +17,7 @@ namespace RAT_Lab
 		public static string ERROR_INCORRECT_PASSWORD = "incorrect password try again";
 		public static string INFO_ENTER_USERNAME = "enter username";
 		public static string INFO_ENTER_PASSWORD = "enter password";
-
-		public static int stepNumber = 1;
-		public static int loginAttempt = 0;
+		public static string ENTER_CAPTCHA_HERE = "enter captcha here";
 
 		public static string username = "";
 		public static string password = "";
@@ -28,8 +26,9 @@ namespace RAT_Lab
 		public static readonly Color basicBlue = Color.FromArgb(33, 150, 243);
 		public static readonly Color bgGrey = Color.FromArgb(237, 237, 237);
 		public static readonly Color lightGrey = Color.FromArgb(233, 236, 239);
+		public static readonly Color darkGrey = Color.FromArgb(73, 80, 87); //темно-серый цвет лейблов
 
-		public static readonly Color colorButtonActivateBG = Color.FromArgb(33, 150, 243);
-		public static readonly Color colorButtonDiactivateBG = Color.FromArgb(108, 117, 125);
+		public static readonly Color colorButtonActivateBG = Color.FromArgb(33, 150, 243); 
+		public static readonly Color colorButtonDiactivateBG = Color.FromArgb(108, 117, 125);	
 	}
 }
