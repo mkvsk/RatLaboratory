@@ -44,16 +44,6 @@ namespace DataBaseApp
 			{	
 				username = textBoxDataToEnter.Text;
 
-				if(loginAttempt != 0)
-                {
-					labelLog.Text = "The entrance will be unlocked after 10 seconds.";
-					panelAllElements.Visible = false;
-
-					blockEntry();
-
-					panelAllElements.Visible = true;
-					labelLog.Text = "QQQ";
-				}
 				if ((!(username.Equals(USERNAME_P)) || (username.Equals(INFO_ENTER_USERNAME))))
 				{
 					textBoxDataToEnter.Text = ERROR_TRY_AGAIN;
@@ -72,9 +62,9 @@ namespace DataBaseApp
 			}
 			else if (stepNumber == 2)
 			{
-				if (loginAttempt >= 1)
-				{
-					captcha();					
+				if(loginAttempt > 0)
+                {
+					captcha();
 				}
 
 				if (password.Equals(PASSWORD_P))
@@ -96,15 +86,41 @@ namespace DataBaseApp
 			}
 		}
 
-		private async void blockEntry()
-        {
-			await Task.Delay(10000);
-		}
-
-		private void captcha()
+		private async void captcha()
         {
 			panelCaptcha.Visible = true;
-			
+
+			if (loginAttempt >= 1)
+			{
+				labelOneMoreStep.ForeColor = darkRed;
+				labelOneMoreStep.Text = "The entrance will be unlocked after 10 seconds.";
+				btnCheckCaptcha.Visible = false;
+				btnRefreshCaptcha.Visible = false;
+				labelCaptcha.Visible = false;
+				labelMessage.Visible = false;
+
+
+				/*btnCheckCaptcha.Visible = true;
+				btnRefreshCaptcha.Visible = true;
+				panelCaptcha.Visible = false;*/
+
+
+				await Task.Run(() =>
+				{
+					Thread.Sleep(5000);
+				});
+				;
+
+				panelCaptcha.Visible = false;
+				stepNumber = 1;
+
+				btnCheckCaptcha.Visible = true;
+				btnRefreshCaptcha.Visible = true;
+				labelCaptcha.Visible = true;
+				labelMessage.Visible = true;
+
+			}
+
 			txtEnterCaptchaHere.ForeColor = lightGrey;
 			txtEnterCaptchaHere.Text = ENTER_CAPTCHA_HERE;
 
