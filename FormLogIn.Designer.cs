@@ -34,7 +34,7 @@ namespace DataBaseApp
             this.panelAllElements = new System.Windows.Forms.Panel();
             this.panelCaptcha = new System.Windows.Forms.Panel();
             this.btnCheckCaptcha = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelUnderText = new System.Windows.Forms.Panel();
             this.btnRefreshCaptcha = new Guna.UI2.WinForms.Guna2CircleButton();
             this.txtEnterCaptchaHere = new System.Windows.Forms.TextBox();
             this.labelCaptcha = new System.Windows.Forms.Label();
@@ -47,7 +47,7 @@ namespace DataBaseApp
             this.textBoxDataToEnter = new System.Windows.Forms.TextBox();
             this.panelAllElements.SuspendLayout();
             this.panelCaptcha.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelUnderText.SuspendLayout();
             this.panelDataToEnter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUser)).BeginInit();
@@ -82,7 +82,7 @@ namespace DataBaseApp
             // panelCaptcha
             // 
             this.panelCaptcha.Controls.Add(this.btnCheckCaptcha);
-            this.panelCaptcha.Controls.Add(this.panel1);
+            this.panelCaptcha.Controls.Add(this.panelUnderText);
             this.panelCaptcha.Controls.Add(this.labelCaptcha);
             this.panelCaptcha.Controls.Add(this.labelMessage);
             this.panelCaptcha.Controls.Add(this.labelOneMoreStep);
@@ -112,16 +112,16 @@ namespace DataBaseApp
             this.btnCheckCaptcha.UseVisualStyleBackColor = false;
             this.btnCheckCaptcha.Click += new System.EventHandler(this.btnCheckCaptcha_Click);
             // 
-            // panel1
+            // panelUnderText
             // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.btnRefreshCaptcha);
-            this.panel1.Controls.Add(this.txtEnterCaptchaHere);
-            this.panel1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.panel1.Location = new System.Drawing.Point(116, 163);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(280, 58);
-            this.panel1.TabIndex = 9;
+            this.panelUnderText.BackColor = System.Drawing.Color.White;
+            this.panelUnderText.Controls.Add(this.btnRefreshCaptcha);
+            this.panelUnderText.Controls.Add(this.txtEnterCaptchaHere);
+            this.panelUnderText.Cursor = System.Windows.Forms.Cursors.Default;
+            this.panelUnderText.Location = new System.Drawing.Point(116, 163);
+            this.panelUnderText.Name = "panelUnderText";
+            this.panelUnderText.Size = new System.Drawing.Size(280, 58);
+            this.panelUnderText.TabIndex = 9;
             // 
             // btnRefreshCaptcha
             // 
@@ -296,8 +296,8 @@ namespace DataBaseApp
             this.panelAllElements.PerformLayout();
             this.panelCaptcha.ResumeLayout(false);
             this.panelCaptcha.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelUnderText.ResumeLayout(false);
+            this.panelUnderText.PerformLayout();
             this.panelDataToEnter.ResumeLayout(false);
             this.panelDataToEnter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPassword)).EndInit();
@@ -318,7 +318,7 @@ namespace DataBaseApp
         private System.Windows.Forms.Label labelOneMoreStep;
         private System.Windows.Forms.Label labelMessage;
         private System.Windows.Forms.Label labelCaptcha;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelUnderText;
         private Guna.UI2.WinForms.Guna2CircleButton btnRefreshCaptcha;
         private System.Windows.Forms.TextBox txtEnterCaptchaHere;
         private System.Windows.Forms.Button btnCheckCaptcha;

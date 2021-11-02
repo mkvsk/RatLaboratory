@@ -62,7 +62,7 @@ namespace DataBaseApp
 			}
 			else if (stepNumber == 2)
 			{
-				if(loginAttempt > 0)
+				if(loginAttempt != 0)
                 {
 					captcha();
 				}
@@ -80,8 +80,9 @@ namespace DataBaseApp
 					textBoxDataToEnter.UseSystemPasswordChar = false;
 					buttonNextStep_diactivate();
 
+					loginAttempt = 1;
 					stepNumber = 2;
-					loginAttempt++;
+					
 				}
 			}
 		}
@@ -93,12 +94,12 @@ namespace DataBaseApp
 			if (loginAttempt >= 1)
 			{
 				labelOneMoreStep.ForeColor = darkRed;
-				labelOneMoreStep.Text = "The entrance will be unlocked after 10 seconds.";
+				labelOneMoreStep.Text = "INVALID DATA";
+				labelMessage.Text = "The entrance will be unlocked after 10 seconds.";
+				panelUnderText.Visible = false;
 				btnCheckCaptcha.Visible = false;
 				btnRefreshCaptcha.Visible = false;
 				labelCaptcha.Visible = false;
-				labelMessage.Visible = false;
-
 
 				/*btnCheckCaptcha.Visible = true;
 				btnRefreshCaptcha.Visible = true;
@@ -325,7 +326,7 @@ namespace DataBaseApp
 			}
 			if (!(labelCaptcha.Text == txtEnterCaptchaHere.Text))
 			{
-				labelOneMoreStep.Text = "try again";
+				labelOneMoreStep.Text = "TRY AGAIN";
 				labelOneMoreStep.ForeColor = Color.DarkRed;
 				generateCaptcha();
 			}
