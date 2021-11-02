@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestDBapp;
 using System.Data.Sql;
+using RAT_Lab;
+
 namespace DataBaseApp
 
 {
@@ -29,7 +31,7 @@ namespace DataBaseApp
 		string password = "";
 
 		private static readonly Color darkRed = Color.FromArgb(224, 96, 85);
-		private static readonly Color lightViolet = Color.FromArgb(111, 92, 195);
+		private static readonly Color basicBlue = Color.FromArgb(33, 150, 243);
 		private static readonly Color bgGrey = Color.FromArgb(237, 237, 237);
 		private static readonly Color lightGrey = Color.FromArgb(233, 236, 239);
 
@@ -99,7 +101,7 @@ namespace DataBaseApp
 			if (password.Equals(PASSWORD_P))
 			{
 				stepNumber = 3;
-				openDB();
+				openCaptcha();
 			}
 			else
 			{
@@ -112,10 +114,10 @@ namespace DataBaseApp
 			}
 		}
 
-		private void openDB()
+		private void openCaptcha()
 		{
-			this.Hide();
-			FormMain newForm = new FormMain();
+			//this.Hide();
+			FormCaptcha newForm = new FormCaptcha();
 			newForm.Show();
 		}
 
