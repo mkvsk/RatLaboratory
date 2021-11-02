@@ -32,14 +32,12 @@ namespace DataBaseApp
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogIn));
             this.labelLog = new System.Windows.Forms.Label();
             this.panelAllElements = new System.Windows.Forms.Panel();
-            this.Loader = new System.Windows.Forms.PictureBox();
             this.buttonNextStep = new System.Windows.Forms.Button();
             this.panelDataToEnter = new System.Windows.Forms.Panel();
             this.pictureBoxPassword = new System.Windows.Forms.PictureBox();
             this.pictureBoxUser = new System.Windows.Forms.PictureBox();
             this.textBoxDataToEnter = new System.Windows.Forms.TextBox();
             this.panelAllElements.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Loader)).BeginInit();
             this.panelDataToEnter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUser)).BeginInit();
@@ -62,7 +60,6 @@ namespace DataBaseApp
             // 
             this.panelAllElements.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.panelAllElements.Controls.Add(this.labelLog);
-            this.panelAllElements.Controls.Add(this.Loader);
             this.panelAllElements.Controls.Add(this.buttonNextStep);
             this.panelAllElements.Controls.Add(this.panelDataToEnter);
             this.panelAllElements.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -70,18 +67,6 @@ namespace DataBaseApp
             this.panelAllElements.Name = "panelAllElements";
             this.panelAllElements.Size = new System.Drawing.Size(509, 286);
             this.panelAllElements.TabIndex = 0;
-            // 
-            // Loader
-            // 
-            this.Loader.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Loader.Image = ((System.Drawing.Image)(resources.GetObject("Loader.Image")));
-            this.Loader.Location = new System.Drawing.Point(215, 114);
-            this.Loader.Name = "Loader";
-            this.Loader.Size = new System.Drawing.Size(80, 80);
-            this.Loader.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.Loader.TabIndex = 0;
-            this.Loader.TabStop = false;
-            this.Loader.Visible = false;
             // 
             // buttonNextStep
             // 
@@ -171,7 +156,6 @@ namespace DataBaseApp
             this.Load += new System.EventHandler(this.FormLogIn_Load);
             this.panelAllElements.ResumeLayout(false);
             this.panelAllElements.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Loader)).EndInit();
             this.panelDataToEnter.ResumeLayout(false);
             this.panelDataToEnter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPassword)).EndInit();
@@ -183,7 +167,6 @@ namespace DataBaseApp
         #endregion
         private System.Windows.Forms.Label labelLog;
         private System.Windows.Forms.Panel panelAllElements;
-        private System.Windows.Forms.PictureBox Loader;
         private System.Windows.Forms.Panel panelDataToEnter;
         private System.Windows.Forms.PictureBox pictureBoxPassword;
         private System.Windows.Forms.PictureBox pictureBoxUser;

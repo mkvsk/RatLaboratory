@@ -1,4 +1,5 @@
 ﻿using DataBaseApp;
+using RAT_Lab;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestDBapp;
+using static RAT_Lab.DataBank;
 
 namespace RAT_Lab
 {
@@ -70,14 +72,28 @@ namespace RAT_Lab
         private void btnCheckCaptcha_Click(object sender, EventArgs e)
         {
             if (labelCaptcha.Text == txtEnterCaptchaHere.Text)
-            {
-                this.Hide();              
+            {   
+                if (DataBank.stepNumber == 3)
+                {
+                    FormMain formMain = new FormMain();
+                    formMain.Show();
+                    this.Hide();
+                }
+                if (DataBank.stepNumber == 1 || DataBank.stepNumber == 2)
+                {
+                    DataBank.stepNumber = 1;
+                    DataBank.loginAttempt++;
+                    FormLogIn formLogin = new FormLogIn();
+                    formLogin.Show();
+                    this.Hide();
+                }
+                
             }
             if (!(labelCaptcha.Text == txtEnterCaptchaHere.Text))
             {
-                this.Close();
-                FormLogIn newForm = new FormLogIn();
-                newForm.Show();
+                labelOneMoreStep.Text = "try again";
+                labelOneMoreStep.ForeColor = Color.DarkRed;
+                generateCaptcha();
             }
         }
 

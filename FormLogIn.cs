@@ -17,7 +17,9 @@ namespace DataBaseApp
 {	
 	public partial class FormLogIn : Form
 	{
-		
+		FormMain formMain;
+		FormCaptcha formCaptcha;
+
 		public FormLogIn()
 		{
 			InitializeComponent();
@@ -35,11 +37,25 @@ namespace DataBaseApp
 			buttonNextStep.BackColor = colorButtonActivateBG;
 		}
 
-		private void buttonNextStep_Click(object sender, EventArgs e)
+		private async void buttonNextStep_Click(object sender, EventArgs e)
 		{	
 			
 			if (stepNumber == 1)
-			{
+			{	
+				if (loginAttempt >= 1)
+                {
+					//MessageBox.Show("await 10 seconds to try again");
+					labelLog.Text = "await 10 seconds to try again";
+					textBoxDataToEnter.Enabled = false;
+					buttonNextStep.Enabled = false;
+
+					Thread.Sleep(10000);
+					await Task.Delay(10000);
+
+					labelLog.Text = "try again";
+					textBoxDataToEnter.Enabled = false;
+					buttonNextStep.Enabled = false;
+				}
 				username = textBoxDataToEnter.Text;
 
 				if ((!(username.Equals(USERNAME_P)) || (username.Equals(INFO_ENTER_USERNAME))))
@@ -60,66 +76,59 @@ namespace DataBaseApp
 			}
 			else if (stepNumber == 2)
 			{
-				showLoader();
+				if (loginAttempt >= 1)
+				{
+					openCaptcha();
+				}
+
+				if (password.Equals(PASSWORD_P))
+				{
+					stepNumber = 3;
+					loginAttempt = 0;
+					openDB();
+				}
+				else
+				{
+					textBoxDataToEnter.Text = ERROR_INCORRECT_PASSWORD;
+					textBoxDataToEnter.ForeColor = darkRed;
+					textBoxDataToEnter.UseSystemPasswordChar = false;
+					buttonNextStep_diactivate();
+
+					stepNumber = 2;
+					loginAttempt++;
+				}
 			}
 		}
-
+/*
 		private async void showLoader()
 		{
 			labelLog.Visible = false;
 			panelDataToEnter.Visible = false;
 			buttonNextStep.Visible = false;
-			Loader.Visible = true;
 
 			await Task.Delay(1000);
 
 			labelLog.Visible = true;
 			panelDataToEnter.Visible = true;
 			buttonNextStep.Visible = true;
-			Loader.Visible = false;
 
 
-			if (password.Equals(PASSWORD_P))
-			{	
-				stepNumber = 3;
-
-				if (loginAttempt >= 1)
-				{
-					openCaptcha();
-				}
-
-				//openDB();
-			}
-			else
-			{
-				textBoxDataToEnter.Text = ERROR_INCORRECT_PASSWORD;
-				textBoxDataToEnter.ForeColor = darkRed;
-				textBoxDataToEnter.UseSystemPasswordChar = false;
-				buttonNextStep_diactivate();
-
-				stepNumber = 2;
-
-				if (loginAttempt >= 1)
-				{
-					openCaptcha();
-				}
-				loginAttempt++;
-			}
-		}
+			
+		}*/
 
 
 		private void openDB()
 		{
 			this.Hide();
-			FormMain newForm = new FormMain();
-			newForm.Show();
+			FormMain formMain = new FormMain();
+			formMain.Show();
 		}
 
 		private void openCaptcha()
 		{
 			this.Hide();
-			FormCaptcha newForm = new FormCaptcha();
-			newForm.Show();
+			FormCaptcha formCaptcha = new FormCaptcha();
+			formCaptcha.Show();
 		}
 
 		private void textBoxDataToEnter_Click(object sender, EventArgs e)
