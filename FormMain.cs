@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using RAT_Lab;
+using static RAT_Lab.DataBank;
+using DataBaseApp;
 
 namespace TestDBapp
 {
 	public partial class FormMain : Form
 	{	
-
 		SqlConnection sqlConnection;
 		string connectionString = @"Data Source=DESKTOP-1Q2BQKB;Initial Catalog=mts_db;Integrated Security=True";
 
@@ -32,9 +33,6 @@ namespace TestDBapp
 		public FormMain()
 		{
 			InitializeComponent();
-
-			panelDetailedInfo.Visible = false;
-			buttonSaveDetailedInfo.Enabled = false;			
 		}
 
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -44,27 +42,27 @@ namespace TestDBapp
 
 		private async void Form1_Load(object sender, EventArgs e)
 		{
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "dataSet.abonents". При необходимости она может быть перемещена или удалена.
+			labelSpeciality.Text = DataBank.username;
+			labelFullName.Text = DataBank.password;
+			// TODO: данная строка кода позволяет загрузить данные в таблицу "dataSet.abonents". При необходимости она может быть перемещена или удалена.
 
-            sqlConnection = new SqlConnection(connectionString);
+			sqlConnection = new SqlConnection(connectionString);
 
 			await sqlConnection.OpenAsync();
 
 			totalAbonentsCount();
 			activeAbonentsCount();
-
-          
 		}
 
 		private void totalAbonentsCount()
 		{
-			int amount_abonents = dataGridView.DisplayedRowCount(true);
-			textBoxTotalAbonentsCount.Text = amount_abonents.ToString();
+			/*int amount_abonents = dataGridView.DisplayedRowCount(true);
+			textBoxTotal.Text = amount_abonents.ToString();*/
         }
 
 		private void activeAbonentsCount()
         {
-			int counter = 0;
+			/*int counter = 0;
 			DataGridViewCheckBoxColumn activityCol = new DataGridViewCheckBoxColumn();
 			activityCol.FalseValue = false;
 
@@ -77,9 +75,21 @@ namespace TestDBapp
 					counter++;
                 }
             }
-			textBoxActiveAbonentsCount.Text = counter.ToString();
+			textBoxActive.Text = counter.ToString();*/
 		}
 
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+			this.Hide();
+			FormLogIn formLogIn = new FormLogIn();
+			formLogIn.Show();
+		}
+    }
+}
+
+/*
+ СОРТИРОВКА
+ 
 		private void sortAscending(DataGridViewTextBoxColumn dataColumn, PictureBox pictureBox)
 		{	
 			dataGridView.Sort(dataColumn, ListSortDirection.Ascending);
@@ -91,406 +101,8 @@ namespace TestDBapp
 			dataGridView.Sort(dataColumn, ListSortDirection.Descending);
 			//pictureBox.Image = TestDBapp.Properties.Resources.descending;
 		}
-
-		private void buttonFullNameDataSort_Click(object sender, EventArgs e)
-		{
-			if (isAscendingFullNameColumn)
-			{
-				sortDescending(fullnameDataGridViewTextBoxColumn, pictureBoxArrowFullName);
-				isAscendingFullNameColumn = false;
-			}
-			else
-			{
-				sortAscending(fullnameDataGridViewTextBoxColumn, pictureBoxArrowFullName);
-				isAscendingFullNameColumn = true;
-			}
-		}
-
-		private void buttonNumberMainDataSort_Click(object sender, EventArgs e)
-		{
-			
-			if (isAscendingPhoneNumberColumn)
-			{
-				sortDescending(phonenumbermainDataGridViewTextBoxColumn, pictureBoxArrowFullName);
-				isAscendingPhoneNumberColumn = false;
-			}
-			else
-			{
-				sortAscending(phonenumbermainDataGridViewTextBoxColumn, pictureBoxArrowFullName);
-				isAscendingPhoneNumberColumn = true;
-			}
-		}
-
-		private void buttonRegistrationDateDataSort_Click(object sender, EventArgs e)
-		{
-			if (isAscendingRegistrationDateColumn)
-			{
-
-				sortDescending(registrationdateDataGridViewTextBoxColumn, pictureBoxArrowRegistrationDate);
-				isAscendingRegistrationDateColumn = false;
-			}
-			else
-			{
-				sortAscending(registrationdateDataGridViewTextBoxColumn, pictureBoxArrowRegistrationDate);
-				isAscendingRegistrationDateColumn = true;
-			}
-		}
-
-		private void buttonActivityDataSort_Click(object sender, EventArgs e)
-		{
-			if (isAscendingActivityColumn)
-			{
-				sortDescending(activityDataGridViewTextBoxColumn, pictureBoxArrowActivity);
-				isAscendingActivityColumn = false;
-			}
-			else
-			{
-				sortAscending(activityDataGridViewTextBoxColumn, pictureBoxArrowActivity);
-				isAscendingActivityColumn = true;
-			}
-		}
-
-		private void buttonTariffPlanDataSort_Click(object sender, EventArgs e)
-		{
-			if (isAscendingTariffPlanColumn)
-			{
-				sortDescending(tariffplanDataGridViewTextBoxColumn, pictureBoxArrowTariffPlan);
-				isAscendingTariffPlanColumn = false;
-			}
-			else
-			{
-				sortAscending(tariffplanDataGridViewTextBoxColumn, pictureBoxArrowTariffPlan);
-				isAscendingTariffPlanColumn = true;
-			}
-		}
-
-        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {	
-			
-
-			string strValue = "";
-			strValue = e.RowIndex.ToString();
-
-			
-
-			if (e.RowIndex == -1)
-			{
-				clearDetailedInfoTextBoxes();
-			}
-			else
-			{
-				DataGridViewRow dr = dataGridView.Rows[e.RowIndex];
-				DataGridViewCellCollection dataColumnList = dr.Cells;
-
-				panelDetailedInfo.Visible = true;
-				//pictureBoxDarkness.Visible = true;
-
-				string full_name_detailed = dataColumnList[0].Value.ToString();
-				string phone_number_detailed = dataColumnList[1].Value.ToString();
-				string passport_number_detailed = dataColumnList[5].Value.ToString();
-				string tariff_plan_detailed = dataColumnList[4].Value.ToString();
-				DateTime registration_date_detailed = DateTime.Parse(dataColumnList[2].Value.ToString());
-				bool activity_detailed = Boolean.Parse(dataColumnList[3].Value.ToString());
-
-				idToChange = Int32.Parse(dataColumnList[6].Value.ToString());
-
-				string[] fio = full_name_detailed.Split();
-				textBoxDetailedSecondName.Text = fio[0];
-				textBoxDetailedFirstName.Text = fio[1];
-				textBoxDetailedMiddleName.Text = fio[2];
-
-				textBoxDetailedPhoneNumber.Text = phone_number_detailed;
-				textBoxDetailedPassportNumber.Text = passport_number_detailed;
-				dateTimeDetailedRegistrationDate.Value = registration_date_detailed;
-				textBoxDetailedTariffPlan.Text = tariff_plan_detailed;
-				checkBoxDetailedInfoStatus.Checked = activity_detailed;
-			}
-
-		}
-
-        private void buttonDetailedInfoCancel_Click(object sender, EventArgs e)
-        {
-			buttonSaveDetailedInfo.Enabled = false;
-			buttonEditDetailedInfo.Enabled = true;
-			panelDetailedInfo.Visible = false;
-			panelMessageBox.Visible = false;
-
-			disableDetailedInfoTextBoxes();
-
-			//pictureBoxDarkness.Visible = false;
-		}
-
-        private void buttonEditDetailedInfo_Click(object sender, EventArgs e)
-        {
-			buttonSaveDetailedInfo.Enabled = true;
-			buttonEditDetailedInfo.Enabled = false;
-
-			enableDetailedInfoTextBoxes();
-		}
-
-        private void buttonSaveDetailedInfo_Click(object sender, EventArgs e)
-        {
-			string full_name_detailed = String.Join(
-				" ", 
-				textBoxDetailedSecondName.Text, 
-				textBoxDetailedFirstName.Text, 
-				textBoxDetailedMiddleName.Text
-				);
-
-			string phone_number_detailed = textBoxDetailedPhoneNumber.Text;
-			string passport_number_detailed = textBoxDetailedPassportNumber.Text;
-			string tariff_plan_detailed = textBoxDetailedTariffPlan.Text;
-			DateTime registration_date_detailed = dateTimeDetailedRegistrationDate.Value;
-			bool activity_detailed = checkBoxDetailedInfoStatus.Checked;
-			//idToChange
-
-
-			//РЕАЛИЗОВАТЬ ОБНОВЛЕНИЕ В БАЗЕ ДАННЫХ ЧЕРЕЗ UPDATE ПО id
-
-			disableDetailedInfoTextBoxes();
-
-			buttonSaveDetailedInfo.Enabled = false;
-			buttonEditDetailedInfo.Enabled = true;
-
-			abonentsBindingSource.EndEdit();
-		}
-
-		private void buttonAddNewAbonent_Click(object sender, EventArgs e)
-        {
-			panelDetailedInfo.Visible = true;
-
-			buttonSaveDetailedInfo.Enabled = true;
-			buttonEditDetailedInfo.Enabled = false;
-
-			enableDetailedInfoTextBoxes();
-			clearDetailedInfoTextBoxes();
-						
-			abonentsBindingSource.AddNew();
-		}
-
-		private void enableDetailedInfoTextBoxes()
-		{
-			textBoxDetailedSecondName.Enabled = true;
-			textBoxDetailedFirstName.Enabled = true;
-			textBoxDetailedMiddleName.Enabled = true;
-			textBoxDetailedPhoneNumber.Enabled = true;
-			textBoxDetailedPassportNumber.Enabled = true;
-			dateTimeDetailedRegistrationDate.Enabled = true;
-			textBoxDetailedTariffPlan.Enabled = true;
-			checkBoxDetailedInfoStatus.Enabled = true;
-		}
-
-		private void disableDetailedInfoTextBoxes()
-		{
-			textBoxDetailedSecondName.Enabled = false;
-			textBoxDetailedFirstName.Enabled = false;
-			textBoxDetailedMiddleName.Enabled = false;
-			textBoxDetailedPhoneNumber.Enabled = false;
-			textBoxDetailedPassportNumber.Enabled = false;
-			dateTimeDetailedRegistrationDate.Enabled = false;
-			textBoxDetailedTariffPlan.Enabled = false;
-			checkBoxDetailedInfoStatus.Enabled = false;
-		}
-
-		private void clearDetailedInfoTextBoxes()
-        {
-			textBoxDetailedSecondName.Text = "";
-			textBoxDetailedFirstName.Text = "";
-			textBoxDetailedMiddleName.Text = "";
-			textBoxDetailedPhoneNumber.Text = "";
-			textBoxDetailedPassportNumber.Text = "";
-			dateTimeDetailedRegistrationDate = null;
-			textBoxDetailedTariffPlan.Text = "";
-			checkBoxDetailedInfoStatus.Checked = false;
-		}
-
-        private void buttonDeleteDetailedInfo_Click(object sender, EventArgs e)
-        {
-			buttonSaveDetailedInfo.Enabled = false;
-			buttonEditDetailedInfo.Enabled = false;
-
-			disableDetailedInfoTextBoxes();
-
-			panelMessageBox.Visible = true;		
-		}
-
-        private void buttonNoMessBox_Click(object sender, EventArgs e)
-        {
-			buttonSaveDetailedInfo.Enabled = true;
-			buttonEditDetailedInfo.Enabled = false;
-
-			panelMessageBox.Visible = false;
-		}
-
-		private void buttonYesMessBox_Click(object sender, EventArgs e)
-        {
-			buttonSaveDetailedInfo.Enabled = false;
-			buttonEditDetailedInfo.Enabled = false;
-
-			panelMessageBox.Visible = false;	
-		}
-
-        private void textBoxFullNameSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-			if (e.KeyCode == Keys.Enter)
-			{
-				e.Handled = true;
-				dataGridView.CurrentCell = null;
-
-				for (int i = 0; i < dataGridView.RowCount; i++)
-				{
-					dataGridView.Rows[i].Selected = false;
-
-					for (int j = 0; j < dataGridView.ColumnCount; j++)
-					{
-						if (dataGridView.Rows[i].Cells[j].Value != null)
-						{
-							if (dataGridView.Rows[i].Cells[j].Value.ToString().Contains(textBoxFullNameSearch.Text))
-							{
-								break;
-							}
-							else
-							{
-								dataGridView.Rows[i].Visible = false;
-							}
-						}
-					}
-				}
-			}
-		}		
-
-        private void textBoxNumberMainSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-			if (e.KeyCode == Keys.Enter)
-			{
-				e.Handled = true;
-				dataGridView.CurrentCell = null;
-
-				for (int i = 0; i < dataGridView.RowCount; i++)
-				{
-					dataGridView.Rows[i].Selected = false;
-
-					for (int j = 0; j < dataGridView.ColumnCount; j++)
-					{
-						if (dataGridView.Rows[i].Cells[j].Value != null)
-						{
-							if (dataGridView.Rows[i].Cells[j].Value.ToString().Contains(textBoxNumberMainSearch.Text))
-							{								
-								break;
-							}
-							else
-							{
-								dataGridView.Rows[i].Visible = false;
-							}
-						}
-					}
-				}
-			}
-		}
-
-        private void buttonHelper_MouseEnter(object sender, EventArgs e)
-        {
-			panelHelper.Visible = true;
-        }
-
-        private void buttonHelper_MouseLeave(object sender, EventArgs e)
-        {
-			panelHelper.Visible = false;
-        }
-    }
-
-
-    public class Abonent
-	{	
-		string second_name;
-		string first_name;
-		string middle_name;
-		string phone_number;
-		string passport_number;
-		string tariff_plan;
-		int registration_date;
-		bool activity;
-		int id;
-
-		public Abonent (
-			string second_name, 
-			string first_name, 
-			string middle_name, 
-			string phone_number, 
-			string passport_number, 
-			string tariff_plan, 
-			bool activity, 
-			int registration_date,
-			int id
-			)
-
-		{
-			this.second_name = second_name;
-			this.first_name = first_name;
-			this.middle_name = middle_name;
-			this.phone_number = phone_number;
-			this.passport_number = passport_number;
-			this.registration_date = registration_date;
-			this.tariff_plan = tariff_plan;
-			this.activity = activity;
-			this.id = id;
-		}
-
-		public string getSecond_name()
-        {
-			return second_name;
-        }
-
-		public string getFirst_name()
-		{
-			return first_name;
-		}
-
-		public string getMiddle_name()
-		{
-			return middle_name;
-		}
-
-		public string getFull_name()
-		{
-			string full_name = "";
-			return full_name;
-		}
-
-		public string getPhone_number()
-		{
-			return phone_number;
-		}
-
-		public string getPassport_number()
-        {
-			return passport_number;
-        }
-
-		public string getTariff_plan()
-		{
-			return tariff_plan;
-		}
-
-		public int getRegistration_date()
-		{
-			return registration_date;
-		}
-
-		public bool getActivity()
-		{
-			return activity;
-		}
-
-		public int getId()
-        {
-			return id;
-        }
-
-	}
-}
-
-
+ 
+ */
 
 /*
 		private void ButtonEditData_Click(object sender, EventArgs e)

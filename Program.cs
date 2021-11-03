@@ -20,7 +20,7 @@ namespace RAT_Lab
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormLogIn());
-            //Application.Run(new FormCaptcha());
+            //Application.Run(new FormMain());
         }
     }
 }

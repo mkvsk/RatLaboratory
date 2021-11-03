@@ -20,7 +20,6 @@ namespace DataBaseApp
 	{
 		private int stepNumber = 1;
 		private int loginAttempt = 0;
-
 		bool canSeePass = false;
 
 		public FormLogIn()
@@ -54,6 +53,8 @@ namespace DataBaseApp
 				}
 				else if (username.Equals(USERNAME_P))
 				{
+					DataBank.username = textBoxDataToEnter.Text;
+
 					textBoxDataToEnter.Text = EMPTY_STRING;
 					stepNumber = 2;
 					textBoxDataToEnter.Text = INFO_ENTER_PASSWORD;
@@ -65,8 +66,6 @@ namespace DataBaseApp
 			}
 			else if (stepNumber == 2)
 			{
-				
-
 				if (loginAttempt != 0)
                 {
 					captcha();
@@ -76,7 +75,9 @@ namespace DataBaseApp
 				{
 					stepNumber = 3;
 					loginAttempt = 0;
+					DataBank.password = textBoxDataToEnter.Text;
 					openDB();
+					this.Hide();
 				}
 				else
 				{
@@ -84,10 +85,8 @@ namespace DataBaseApp
 					textBoxDataToEnter.ForeColor = darkRed;
 					textBoxDataToEnter.UseSystemPasswordChar = false;
 					buttonNextStep_diactivate();
-
 					loginAttempt = 1;
 					stepNumber = 2;
-					
 				}
 			}
 		}
@@ -96,7 +95,6 @@ namespace DataBaseApp
         {
 			pictureBoxViewPassChar.Visible = true;
 			textBoxDataToEnter.UseSystemPasswordChar = true;
-
 			if (canSeePass)
 			{
 				textBoxDataToEnter.UseSystemPasswordChar = false;
@@ -120,16 +118,10 @@ namespace DataBaseApp
 				labelOneMoreStep.ForeColor = darkRed;
 				labelOneMoreStep.Text = "INVALID DATA";
 				labelMessage.Text = "The entrance will be unlocked after 10 seconds.";
-				
 				panelUnderText.Visible = false;
 				btnCheckCaptcha.Visible = false;
 				btnRefreshCaptcha.Visible = false;
 				labelCaptcha.Visible = false;
-
-				/*btnCheckCaptcha.Visible = true;
-				btnRefreshCaptcha.Visible = true;
-				panelCaptcha.Visible = false;*/
-
 
 				await Task.Run(() =>
 				{
@@ -137,18 +129,13 @@ namespace DataBaseApp
 				});
 
 				stepNumber = 1;
-
 				panelUnderText.Visible = true;
 				btnCheckCaptcha.Visible = true;
 				btnRefreshCaptcha.Visible = true;
 				labelCaptcha.Visible = true;			
 			}
-
 			txtEnterCaptchaHere.ForeColor = lightGrey;
 			txtEnterCaptchaHere.Text = ENTER_CAPTCHA_HERE;
-
-			
-
 			btnCheckCaptcha.Enabled = false;
 			btnCheckCaptcha.BackColor = colorButtonDiactivateBG;
 		}
@@ -176,7 +163,6 @@ namespace DataBaseApp
 					}
 				}
 			} while (true);
-
 			labelCaptcha.Text = cptch;
 		}
 
@@ -189,7 +175,6 @@ namespace DataBaseApp
 
 		private void textBoxDataToEnter_Click(object sender, EventArgs e)
 		{
-
 			if (textBoxDataToEnter.Text.Equals(INFO_ENTER_USERNAME)
 				|| textBoxDataToEnter.Text.Equals(ERROR_TRY_AGAIN)
 				|| textBoxDataToEnter.Text.Equals(INFO_ENTER_PASSWORD)
@@ -258,7 +243,7 @@ namespace DataBaseApp
 			loginAttempt = 0;
 		}
 
-		public class User
+/*		public class User
 		{
 			string username;
 			string password;
@@ -291,24 +276,22 @@ namespace DataBaseApp
             }
 
 		}
-
+*/
         private void btnCheckCaptcha_Click(object sender, EventArgs e)
         {
 			if (labelCaptcha.Text == txtEnterCaptchaHere.Text)
 			{
 				if (stepNumber == 3)
 				{
-                    FormMain formMain = new FormMain();
-                    formMain.Show();
-                    this.Hide();
-                }
+					loginAttempt = 0;
+					DataBank.password = textBoxDataToEnter.Text;
+					openDB();
+					this.Hide();
+				}
 				if (stepNumber == 1 || stepNumber == 2)
 				{
 					stepNumber = 1;
 					loginAttempt++;
-
-					// TO DO ******************************************************
-
 					panelCaptcha.Visible = false;
 				}
 			}
@@ -339,7 +322,6 @@ namespace DataBaseApp
         private void txtEnterCaptchaHere_KeyDown(object sender, KeyEventArgs e)
         {
 			txtEnterCaptchaHere.ForeColor = darkGrey;
-
 			if (e.KeyCode == Keys.Enter)
 			{
 				btnCheckCaptcha.Focus();
@@ -349,6 +331,15 @@ namespace DataBaseApp
 
         private void txtEnterCaptchaHere_KeyPress(object sender, KeyPressEventArgs e)
         {
+			if (!((e.KeyChar >= 'A' && e.KeyChar <= 'Z')
+				|| (e.KeyChar >= 'a' && e.KeyChar <= 'z')
+				|| (e.KeyChar >= '0' && e.KeyChar <= '9')
+				|| e.KeyChar == '_'
+				|| e.KeyChar == (char)Keys.Back))
+			{
+				e.Handled = true;
+			}
+
 			if (txtEnterCaptchaHere.Text.Length >= 5)
 			{
 				btnCheckCaptcha.Enabled = true;

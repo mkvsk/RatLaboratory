@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RAT_Lab
 {
-    static class DataBank
+    public static class DataBank
     {
 		public static string USERNAME_P = "root";
 		public static string PASSWORD_P = "1339";
