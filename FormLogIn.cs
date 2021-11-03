@@ -21,6 +21,8 @@ namespace DataBaseApp
 		private int stepNumber = 1;
 		private int loginAttempt = 0;
 
+		bool canSeePass = false;
+
 		public FormLogIn()
 		{
 			InitializeComponent();
@@ -57,12 +59,15 @@ namespace DataBaseApp
 					textBoxDataToEnter.Text = INFO_ENTER_PASSWORD;
 					textBoxDataToEnter.ForeColor = lightGrey;
 					pictureBoxPassword.Visible = true;
+					pictureBoxViewPassChar.Visible = true;
 					buttonNextStep_diactivate();
 				}
 			}
 			else if (stepNumber == 2)
 			{
-				if(loginAttempt != 0)
+				
+
+				if (loginAttempt != 0)
                 {
 					captcha();
 				}
@@ -84,6 +89,25 @@ namespace DataBaseApp
 					stepNumber = 2;
 					
 				}
+			}
+		}
+
+		private void showOrHidePassChar()
+        {
+			pictureBoxViewPassChar.Visible = true;
+			textBoxDataToEnter.UseSystemPasswordChar = true;
+
+			if (canSeePass)
+			{
+				textBoxDataToEnter.UseSystemPasswordChar = false;
+				pictureBoxHiddenPassChar.Visible = true;
+				pictureBoxViewPassChar.Visible = false;
+			}
+			if (!(canSeePass))
+			{
+				textBoxDataToEnter.UseSystemPasswordChar = true;
+				pictureBoxViewPassChar.Visible = true;
+				pictureBoxHiddenPassChar.Visible = false;
 			}
 		}
 
@@ -336,5 +360,17 @@ namespace DataBaseApp
 				btnCheckCaptcha.BackColor = colorButtonDiactivateBG;
 			}
 		}
+
+        private void pictureBoxViewPassChar_Click(object sender, EventArgs e)
+        {
+			canSeePass = true;
+			showOrHidePassChar();
+        }
+
+        private void pictureBoxHiddenPassChar_Click(object sender, EventArgs e)
+        {
+			canSeePass = false;
+			showOrHidePassChar();
+        }
     }
 }
