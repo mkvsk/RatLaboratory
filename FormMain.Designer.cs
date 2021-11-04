@@ -33,6 +33,7 @@ namespace TestDBapp
             this.ShadowPanel = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.labelTotal = new System.Windows.Forms.Label();
             this.panelAccount = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            this.buttonLogout = new Guna.UI2.WinForms.Guna2Button();
             this.labelSpeciality = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBoxUserPhoto = new System.Windows.Forms.PictureBox();
@@ -43,13 +44,13 @@ namespace TestDBapp
             this.labelActive = new System.Windows.Forms.Label();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelHeaderRight = new Guna.UI2.WinForms.Guna2ShadowPanel();
-            this.buttonLogout = new Guna.UI2.WinForms.Guna2Button();
-            this.pictureBoxLabLogo = new System.Windows.Forms.PictureBox();
             this.labelPotatoCorp = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelAccount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserPhoto)).BeginInit();
             this.panelHeaderRight.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLabLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // ShadowPanel
@@ -72,7 +73,7 @@ namespace TestDBapp
             this.labelTotal.BackColor = System.Drawing.Color.Transparent;
             this.labelTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(73)))), ((int)(((byte)(80)))), ((int)(((byte)(87)))));
-            this.labelTotal.Location = new System.Drawing.Point(137, 62);
+            this.labelTotal.Location = new System.Drawing.Point(128, 62);
             this.labelTotal.Name = "labelTotal";
             this.labelTotal.Size = new System.Drawing.Size(63, 25);
             this.labelTotal.TabIndex = 12;
@@ -96,6 +97,37 @@ namespace TestDBapp
             this.panelAccount.ShadowShift = 6;
             this.panelAccount.Size = new System.Drawing.Size(475, 156);
             this.panelAccount.TabIndex = 13;
+            // 
+            // buttonLogout
+            // 
+            this.buttonLogout.BackColor = System.Drawing.Color.Transparent;
+            this.buttonLogout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonLogout.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(236)))), ((int)(((byte)(239)))));
+            this.buttonLogout.BorderRadius = 6;
+            this.buttonLogout.BorderThickness = 3;
+            this.buttonLogout.CheckedState.Parent = this.buttonLogout;
+            this.buttonLogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonLogout.CustomImages.ImageAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.buttonLogout.CustomImages.ImageOffset = new System.Drawing.Point(0, -10);
+            this.buttonLogout.CustomImages.ImageSize = new System.Drawing.Size(40, 40);
+            this.buttonLogout.CustomImages.Parent = this.buttonLogout;
+            this.buttonLogout.DisabledState.Parent = this.buttonLogout;
+            this.buttonLogout.FillColor = System.Drawing.Color.Transparent;
+            this.buttonLogout.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.buttonLogout.HoverState.BorderColor = System.Drawing.Color.DarkRed;
+            this.buttonLogout.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.buttonLogout.HoverState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonLogout.HoverState.Parent = this.buttonLogout;
+            this.buttonLogout.Location = new System.Drawing.Point(358, 105);
+            this.buttonLogout.Name = "buttonLogout";
+            this.buttonLogout.PressedColor = System.Drawing.Color.Red;
+            this.buttonLogout.ShadowDecoration.Parent = this.buttonLogout;
+            this.buttonLogout.Size = new System.Drawing.Size(104, 40);
+            this.buttonLogout.TabIndex = 34;
+            this.buttonLogout.Tag = "";
+            this.buttonLogout.Text = "LogOut";
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // labelSpeciality
             // 
@@ -126,9 +158,9 @@ namespace TestDBapp
             this.pictureBoxUserPhoto.BackColor = System.Drawing.Color.White;
             this.pictureBoxUserPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBoxUserPhoto.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxUserPhoto.Image")));
-            this.pictureBoxUserPhoto.Location = new System.Drawing.Point(24, 21);
+            this.pictureBoxUserPhoto.Location = new System.Drawing.Point(24, 27);
             this.pictureBoxUserPhoto.Name = "pictureBoxUserPhoto";
-            this.pictureBoxUserPhoto.Size = new System.Drawing.Size(104, 97);
+            this.pictureBoxUserPhoto.Size = new System.Drawing.Size(100, 100);
             this.pictureBoxUserPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxUserPhoto.TabIndex = 13;
             this.pictureBoxUserPhoto.TabStop = false;
@@ -163,7 +195,7 @@ namespace TestDBapp
             this.textBoxActive.BackColor = System.Drawing.Color.Transparent;
             this.textBoxActive.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxActive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
-            this.textBoxActive.Location = new System.Drawing.Point(205, 93);
+            this.textBoxActive.Location = new System.Drawing.Point(196, 93);
             this.textBoxActive.Name = "textBoxActive";
             this.textBoxActive.Size = new System.Drawing.Size(63, 25);
             this.textBoxActive.TabIndex = 37;
@@ -175,7 +207,7 @@ namespace TestDBapp
             this.textBoxTotal.BackColor = System.Drawing.Color.Transparent;
             this.textBoxTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
-            this.textBoxTotal.Location = new System.Drawing.Point(192, 62);
+            this.textBoxTotal.Location = new System.Drawing.Point(183, 62);
             this.textBoxTotal.Name = "textBoxTotal";
             this.textBoxTotal.Size = new System.Drawing.Size(52, 25);
             this.textBoxTotal.TabIndex = 36;
@@ -187,7 +219,7 @@ namespace TestDBapp
             this.labelActive.BackColor = System.Drawing.Color.Transparent;
             this.labelActive.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelActive.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(73)))), ((int)(((byte)(80)))), ((int)(((byte)(87)))));
-            this.labelActive.Location = new System.Drawing.Point(137, 93);
+            this.labelActive.Location = new System.Drawing.Point(128, 93);
             this.labelActive.Name = "labelActive";
             this.labelActive.Size = new System.Drawing.Size(76, 25);
             this.labelActive.TabIndex = 35;
@@ -199,20 +231,20 @@ namespace TestDBapp
             this.labelHeader.BackColor = System.Drawing.Color.Transparent;
             this.labelHeader.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(73)))), ((int)(((byte)(80)))), ((int)(((byte)(87)))));
-            this.labelHeader.Location = new System.Drawing.Point(136, 21);
+            this.labelHeader.Location = new System.Drawing.Point(190, 27);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(184, 32);
+            this.labelHeader.Size = new System.Drawing.Size(160, 32);
             this.labelHeader.TabIndex = 14;
-            this.labelHeader.Text = "RAT Laboratory";
+            this.labelHeader.Text = "St.Petersburg";
             this.labelHeader.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // panelHeaderRight
             // 
             this.panelHeaderRight.BackColor = System.Drawing.Color.Transparent;
-            this.panelHeaderRight.Controls.Add(this.pictureBoxLabLogo);
             this.panelHeaderRight.Controls.Add(this.labelHeader);
+            this.panelHeaderRight.Controls.Add(this.pictureBox1);
+            this.panelHeaderRight.Controls.Add(this.label3);
             this.panelHeaderRight.Controls.Add(this.textBoxActive);
-            this.panelHeaderRight.Controls.Add(this.labelPotatoCorp);
             this.panelHeaderRight.Controls.Add(this.textBoxTotal);
             this.panelHeaderRight.Controls.Add(this.labelActive);
             this.panelHeaderRight.Controls.Add(this.labelTotal);
@@ -226,65 +258,47 @@ namespace TestDBapp
             this.panelHeaderRight.Size = new System.Drawing.Size(881, 156);
             this.panelHeaderRight.TabIndex = 14;
             // 
-            // buttonLogout
-            // 
-            this.buttonLogout.BackColor = System.Drawing.Color.Transparent;
-            this.buttonLogout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonLogout.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(236)))), ((int)(((byte)(239)))));
-            this.buttonLogout.BorderRadius = 6;
-            this.buttonLogout.BorderThickness = 3;
-            this.buttonLogout.CheckedState.Parent = this.buttonLogout;
-            this.buttonLogout.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonLogout.CustomImages.ImageAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.buttonLogout.CustomImages.ImageOffset = new System.Drawing.Point(0, -10);
-            this.buttonLogout.CustomImages.ImageSize = new System.Drawing.Size(40, 40);
-            this.buttonLogout.CustomImages.Parent = this.buttonLogout;
-            this.buttonLogout.DisabledState.Parent = this.buttonLogout;
-            this.buttonLogout.FillColor = System.Drawing.Color.Transparent;
-            this.buttonLogout.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.buttonLogout.HoverState.BorderColor = System.Drawing.Color.DarkRed;
-            this.buttonLogout.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.buttonLogout.HoverState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.buttonLogout.HoverState.Parent = this.buttonLogout;
-            this.buttonLogout.Location = new System.Drawing.Point(358, 105);
-            this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.PressedColor = System.Drawing.Color.Red;
-            this.buttonLogout.ShadowDecoration.Parent = this.buttonLogout;
-            this.buttonLogout.Size = new System.Drawing.Size(104, 40);
-            this.buttonLogout.TabIndex = 34;
-            this.buttonLogout.Tag = "";
-            this.buttonLogout.Text = "LogOut";
-            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
-            // 
-            // pictureBoxLabLogo
-            // 
-            this.pictureBoxLabLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBoxLabLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLabLogo.Image")));
-            this.pictureBoxLabLogo.Location = new System.Drawing.Point(20, 21);
-            this.pictureBoxLabLogo.Name = "pictureBoxLabLogo";
-            this.pictureBoxLabLogo.Size = new System.Drawing.Size(104, 97);
-            this.pictureBoxLabLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxLabLogo.TabIndex = 34;
-            this.pictureBoxLabLogo.TabStop = false;
-            // 
             // labelPotatoCorp
             // 
             this.labelPotatoCorp.AutoSize = true;
             this.labelPotatoCorp.BackColor = System.Drawing.Color.Transparent;
             this.labelPotatoCorp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelPotatoCorp.ForeColor = System.Drawing.Color.Gray;
-            this.labelPotatoCorp.Location = new System.Drawing.Point(17, 130);
+            this.labelPotatoCorp.Location = new System.Drawing.Point(1156, 995);
             this.labelPotatoCorp.Name = "labelPotatoCorp";
             this.labelPotatoCorp.Size = new System.Drawing.Size(235, 15);
             this.labelPotatoCorp.TabIndex = 42;
             this.labelPotatoCorp.Text = "v13.39 Potato Corp, 2021, all rights reserved\r\n";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
+            this.label3.Location = new System.Drawing.Point(126, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 40);
+            this.label3.TabIndex = 39;
+            this.label3.Text = "N20";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(21, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 49;
+            this.pictureBox1.TabStop = false;
             // 
             // FormMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(1424, 1019);
+            this.Controls.Add(this.labelPotatoCorp);
             this.Controls.Add(this.panelHeaderRight);
             this.Controls.Add(this.panelAccount);
             this.Controls.Add(this.ShadowPanel);
@@ -293,7 +307,7 @@ namespace TestDBapp
             this.MinimumSize = new System.Drawing.Size(1440, 1058);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Abonents data";
+            this.Text = "N20 Lab";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelAccount.ResumeLayout(false);
@@ -301,8 +315,9 @@ namespace TestDBapp
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserPhoto)).EndInit();
             this.panelHeaderRight.ResumeLayout(false);
             this.panelHeaderRight.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLabLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -323,7 +338,8 @@ namespace TestDBapp
         private System.Windows.Forms.Label labelFullName;
         private System.Windows.Forms.Label label2;
         private Guna.UI2.WinForms.Guna2Button buttonLogout;
-        private System.Windows.Forms.PictureBox pictureBoxLabLogo;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

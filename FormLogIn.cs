@@ -53,7 +53,7 @@ namespace DataBaseApp
 				}
 				else if (username.Equals(USERNAME_P))
 				{
-					DataBank.username = textBoxDataToEnter.Text;
+					username = textBoxDataToEnter.Text;
 
 					textBoxDataToEnter.Text = EMPTY_STRING;
 					stepNumber = 2;
@@ -75,7 +75,8 @@ namespace DataBaseApp
 				{
 					stepNumber = 3;
 					loginAttempt = 0;
-					DataBank.password = textBoxDataToEnter.Text;
+					DataBank.username = USERNAME_P;
+					DataBank.password = PASSWORD_P;
 					openDB();
 					this.Hide();
 				}

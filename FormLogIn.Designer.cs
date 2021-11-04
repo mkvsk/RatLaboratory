@@ -42,19 +42,19 @@ namespace DataBaseApp
             this.labelOneMoreStep = new System.Windows.Forms.Label();
             this.buttonNextStep = new System.Windows.Forms.Button();
             this.panelDataToEnter = new System.Windows.Forms.Panel();
+            this.pictureBoxViewPassChar = new System.Windows.Forms.PictureBox();
+            this.pictureBoxHiddenPassChar = new System.Windows.Forms.PictureBox();
             this.pictureBoxPassword = new System.Windows.Forms.PictureBox();
             this.pictureBoxUser = new System.Windows.Forms.PictureBox();
             this.textBoxDataToEnter = new System.Windows.Forms.TextBox();
-            this.pictureBoxHiddenPassChar = new System.Windows.Forms.PictureBox();
-            this.pictureBoxViewPassChar = new System.Windows.Forms.PictureBox();
             this.panelAllElements.SuspendLayout();
             this.panelCaptcha.SuspendLayout();
             this.panelUnderText.SuspendLayout();
             this.panelDataToEnter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxViewPassChar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHiddenPassChar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHiddenPassChar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxViewPassChar)).BeginInit();
             this.SuspendLayout();
             // 
             // labelLog
@@ -244,6 +244,30 @@ namespace DataBaseApp
             this.panelDataToEnter.Size = new System.Drawing.Size(388, 56);
             this.panelDataToEnter.TabIndex = 0;
             // 
+            // pictureBoxViewPassChar
+            // 
+            this.pictureBoxViewPassChar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxViewPassChar.Image")));
+            this.pictureBoxViewPassChar.Location = new System.Drawing.Point(338, 10);
+            this.pictureBoxViewPassChar.Name = "pictureBoxViewPassChar";
+            this.pictureBoxViewPassChar.Size = new System.Drawing.Size(36, 36);
+            this.pictureBoxViewPassChar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxViewPassChar.TabIndex = 4;
+            this.pictureBoxViewPassChar.TabStop = false;
+            this.pictureBoxViewPassChar.Visible = false;
+            this.pictureBoxViewPassChar.Click += new System.EventHandler(this.pictureBoxViewPassChar_Click);
+            // 
+            // pictureBoxHiddenPassChar
+            // 
+            this.pictureBoxHiddenPassChar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxHiddenPassChar.Image")));
+            this.pictureBoxHiddenPassChar.Location = new System.Drawing.Point(338, 10);
+            this.pictureBoxHiddenPassChar.Name = "pictureBoxHiddenPassChar";
+            this.pictureBoxHiddenPassChar.Size = new System.Drawing.Size(36, 36);
+            this.pictureBoxHiddenPassChar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxHiddenPassChar.TabIndex = 3;
+            this.pictureBoxHiddenPassChar.TabStop = false;
+            this.pictureBoxHiddenPassChar.Visible = false;
+            this.pictureBoxHiddenPassChar.Click += new System.EventHandler(this.pictureBoxHiddenPassChar_Click);
+            // 
             // pictureBoxPassword
             // 
             this.pictureBoxPassword.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPassword.Image")));
@@ -275,7 +299,7 @@ namespace DataBaseApp
             this.textBoxDataToEnter.MaximumSize = new System.Drawing.Size(275, 36);
             this.textBoxDataToEnter.MinimumSize = new System.Drawing.Size(275, 36);
             this.textBoxDataToEnter.Name = "textBoxDataToEnter";
-            this.textBoxDataToEnter.Size = new System.Drawing.Size(275, 36);
+            this.textBoxDataToEnter.Size = new System.Drawing.Size(275, 28);
             this.textBoxDataToEnter.TabIndex = 0;
             this.textBoxDataToEnter.TabStop = false;
             this.textBoxDataToEnter.Text = "enter username";
@@ -283,30 +307,6 @@ namespace DataBaseApp
             this.textBoxDataToEnter.TextChanged += new System.EventHandler(this.textBoxDataToEnter_TextChanged);
             this.textBoxDataToEnter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxDataToEnter_KeyDown);
             this.textBoxDataToEnter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDataToEnter_KeyPress);
-            // 
-            // pictureBoxHiddenPassChar
-            // 
-            this.pictureBoxHiddenPassChar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxHiddenPassChar.Image")));
-            this.pictureBoxHiddenPassChar.Location = new System.Drawing.Point(338, 10);
-            this.pictureBoxHiddenPassChar.Name = "pictureBoxHiddenPassChar";
-            this.pictureBoxHiddenPassChar.Size = new System.Drawing.Size(36, 36);
-            this.pictureBoxHiddenPassChar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxHiddenPassChar.TabIndex = 3;
-            this.pictureBoxHiddenPassChar.TabStop = false;
-            this.pictureBoxHiddenPassChar.Visible = false;
-            this.pictureBoxHiddenPassChar.Click += new System.EventHandler(this.pictureBoxHiddenPassChar_Click);
-            // 
-            // pictureBoxViewPassChar
-            // 
-            this.pictureBoxViewPassChar.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxViewPassChar.Image")));
-            this.pictureBoxViewPassChar.Location = new System.Drawing.Point(338, 10);
-            this.pictureBoxViewPassChar.Name = "pictureBoxViewPassChar";
-            this.pictureBoxViewPassChar.Size = new System.Drawing.Size(36, 36);
-            this.pictureBoxViewPassChar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxViewPassChar.TabIndex = 4;
-            this.pictureBoxViewPassChar.TabStop = false;
-            this.pictureBoxViewPassChar.Visible = false;
-            this.pictureBoxViewPassChar.Click += new System.EventHandler(this.pictureBoxViewPassChar_Click);
             // 
             // FormLogIn
             // 
@@ -332,10 +332,10 @@ namespace DataBaseApp
             this.panelUnderText.PerformLayout();
             this.panelDataToEnter.ResumeLayout(false);
             this.panelDataToEnter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxViewPassChar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHiddenPassChar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPassword)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHiddenPassChar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxViewPassChar)).EndInit();
             this.ResumeLayout(false);
 
         }
