@@ -124,10 +124,7 @@ namespace DataBaseApp
 				btnRefreshCaptcha.Visible = false;
 				labelCaptcha.Visible = false;
 
-				await Task.Run(() =>
-				{
-					Thread.Sleep(10000);
-				});
+				await Task.Run(() => { Thread.Sleep(10000);});
 
 				stepNumber = 1;
 				panelUnderText.Visible = true;

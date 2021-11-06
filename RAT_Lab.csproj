@@ -50,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBank.cs" />
+    <Compile Include="FormClients.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormClients.Designer.cs">
+      <DependentUpon>FormClients.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormClients.resx">
+      <DependentUpon>FormClients.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLogIn.resx">
       <DependentUpon>FormLogIn.cs</DependentUpon>
       <SubType>Designer</SubType>

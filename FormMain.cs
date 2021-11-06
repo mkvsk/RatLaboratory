@@ -11,13 +11,14 @@ using System.Data.SqlClient;
 using RAT_Lab;
 using static RAT_Lab.DataBank;
 using DataBaseApp;
+using System.Threading;
 
 namespace TestDBapp
 {
 	public partial class FormMain : Form
 	{	
-		SqlConnection sqlConnection;
-		string connectionString = @"Data Source=DESKTOP-1Q2BQKB;Initial Catalog=mts_db;Integrated Security=True";
+		//SqlConnection sqlConnection;
+		//string connectionString = @"Data Source=DESKTOP-1Q2BQKB;Initial Catalog=mts_db;Integrated Security=True";
 
 		public Boolean isRotatedFullName = false;
 		public Boolean isFirstClickFullName = true;
@@ -42,16 +43,18 @@ namespace TestDBapp
 
 		private async void Form1_Load(object sender, EventArgs e)
 		{
-			labelSpeciality.Text = DataBank.username;
-			labelFullName.Text = DataBank.password;
+			labelSpeciality.Text = "Department";
+			labelFullName.Text = "EmployeeFullName";
+			//labelSpeciality.Text = DataBank.username;
+			//labelFullName.Text = DataBank.password;
 			// TODO: данная строка кода позволяет загрузить данные в таблицу "dataSet.abonents". При необходимости она может быть перемещена или удалена.
 
-			sqlConnection = new SqlConnection(connectionString);
+			//sqlConnection = new SqlConnection(connectionString);
 
-			await sqlConnection.OpenAsync();
+			//await sqlConnection.OpenAsync();
 
-			totalAbonentsCount();
-			activeAbonentsCount();
+			//totalAbonentsCount();
+			//activeAbonentsCount();
 		}
 
 		private void totalAbonentsCount()
@@ -84,7 +87,14 @@ namespace TestDBapp
 			FormLogIn formLogIn = new FormLogIn();
 			formLogIn.Show();
 		}
-    }
+
+        private async void btnClients_Click(object sender, EventArgs e)
+        {
+			await Task.Run(() => { Thread.Yield(); });
+			FormClients formClients = new FormClients();
+			formClients.Show();
+		}
+	}
 }
 
 /*
