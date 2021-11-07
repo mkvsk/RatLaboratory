@@ -22,6 +22,8 @@ namespace DataBaseApp
 		private int loginAttempt = 0;
 		bool canSeePass = false;
 
+		Account model = new Account();
+
 		public FormLogIn()
 		{
 			InitializeComponent();
@@ -44,6 +46,7 @@ namespace DataBaseApp
 			if (stepNumber == 1)
 			{	
 				username = textBoxDataToEnter.Text;
+				searchAccount();
 
 				if ((!(username.Equals(USERNAME_P)) || (username.Equals(INFO_ENTER_USERNAME))))
 				{
@@ -90,6 +93,18 @@ namespace DataBaseApp
 					stepNumber = 2;
 				}
 			}
+		}
+
+		void searchAccount()
+        {	
+			
+			/*using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+				object tmp = db.Accounts.FindAsync(model.UQ_AccountLogin.Equals(username));
+				USERNAME_P = tmp.ToString();
+				//model.UQ_AccountLogin 
+			}*/
+
 		}
 
 		private void showOrHidePassChar()
@@ -241,40 +256,6 @@ namespace DataBaseApp
 			loginAttempt = 0;
 		}
 
-/*		public class User
-		{
-			string username;
-			string password;
-			string access_key;
-
-			public User(
-				string username,
-				string password,
-				string accessKey
-				)
-			{
-				this.username = username;
-				this.password = password;
-				this.access_key = accessKey;
-			}
-
-			public string getUsername()
-			{
-				return username;
-			}
-
-			public string getPassword()
-            {
-				return password;
-            }
-
-			public string getAccessKey()
-            {
-				return access_key;
-            }
-
-		}
-*/
         private void btnCheckCaptcha_Click(object sender, EventArgs e)
         {
 			if (labelCaptcha.Text == txtEnterCaptchaHere.Text)
@@ -303,7 +284,6 @@ namespace DataBaseApp
 				generateCaptcha();
 			}
 		}
-
         private void btnRefreshCaptcha_Click(object sender, EventArgs e)
         {
 			txtEnterCaptchaHere.ForeColor = bgGrey;
