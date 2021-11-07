@@ -42,12 +42,6 @@ namespace TestDBapp
 			LoadData();
 		}
 
-		private void totalAbonentsCount()
-		{
-			/*int amount_abonents = dataGridView.DisplayedRowCount(true);
-			textBoxTotal.Text = amount_abonents.ToString();*/
-        }
-
 		private void activeAbonentsCount()
         {
 			/*int counter = 0;
@@ -80,8 +74,12 @@ namespace TestDBapp
 			panelBtnClients.Visible = true;
 
 			dgvClients.Visible = true;
-			LaboratoryEntities db = new LaboratoryEntities();
-			dgvClients.DataSource = db.Clients.ToList<Client>(); //---------------- TABLE CLIENTS------------------------
+			dgvClients.AutoGenerateColumns = false;
+			using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+				dgvClients.DataSource = db.Clients.ToList<Client>();
+				textBoxTotal.Text = Convert.ToString(db.Clients.Count());
+			}
 		}
 
 		private void btnBackToMenu_Click(object sender, EventArgs e)
@@ -91,6 +89,12 @@ namespace TestDBapp
 			panelClientsSearch.Visible = false;
 
 			dgvClients.Visible = false;
+
+			if (panelAccounts.Visible)
+            {
+				panelAccounts.Visible = false;
+				dgvAccounts.Visible = false;
+			}
 		}
 
         private async void btnAddNewClient_Click(object sender, EventArgs e)
@@ -102,14 +106,41 @@ namespace TestDBapp
 
 		void LoadData()
         {
-            LaboratoryEntities db = new LaboratoryEntities();
-			dgvServices.DataSource = db.Services.ToList<Service>();
-
-
-			/*using (LaboratoryEntities db = new LaboratoryEntities())
+			dgvClients.AutoGenerateColumns = false;
+            using (LaboratoryEntities db = new LaboratoryEntities())
             {
                 dgvServices.DataSource = db.Services.ToList<Service>();
-            }*/
+            }
+        }
+
+        private void btnAccounts_Click(object sender, EventArgs e)
+        {
+			panelAccounts.Visible = true;
+			dgvServices.Visible = false;
+
+			dgvAccounts.Visible = true;
+			dgvAccounts.AutoGenerateColumns = false;
+			using (LaboratoryEntities db = new LaboratoryEntities())
+			{
+				dgvAccounts.DataSource = db.Accounts.ToList<Account>();
+			}
 		}
-	}
+
+        public async void dgvAccounts_DoubleClick(object sender, EventArgs e)
+        {	
+			if(dgvClients.CurrentRow.Index != 1)
+            {
+				client.PK_ClientPassport = Convert.ToInt32(dgvClients.CurrentRow.Cells["PK_ClientPassport"].Value);
+				using (LaboratoryEntities db = new LaboratoryEntities())
+				{
+					client = db.Clients.Where(x => x.PK_ClientPassport == client.PK_ClientPassport).FirstOrDefault();
+
+					await Task.Run(() => { Thread.Yield(); });
+					FormViewClientData formAddNewClientData = new FormViewClientData();
+					formAddNewClientData.Show();
+				}
+			}
+			
+		}
+    }
 }

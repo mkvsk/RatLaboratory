@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RAT_Lab;
+using TestDBapp;
 
 namespace RAT_Lab
 {
@@ -49,6 +50,17 @@ namespace RAT_Lab
         private void FormViewClientData_Load(object sender, EventArgs e)
         {
             clearTxt();
+
+            /*txtPassport.Text = FormMain.client.PK_ClientPassport;
+            txtFullName.Text;
+            txtDOB.Text;
+            txtPhoneNumber.Text;
+            txtClientEmail.Text;
+            txtINN.Text;
+            txtPolicyType.Text;
+            txtCompName.Text;*/
+
+            btnDeleteData.Enabled = true;
         }
 
         private void btnSaveData_Click(object sender, EventArgs e)
