@@ -19,7 +19,8 @@ namespace TestDBapp
 	{	
 		//private int idToChange;
 
-		Service model = new Service();
+		Service service = new Service();
+		Client client = new Client();
 
 		public FormMain()
 		{
@@ -77,13 +78,19 @@ namespace TestDBapp
 			panelMainMenu.Visible = false;
 			panelClientsSearch.Visible = true;
 			panelBtnClients.Visible = true;
+
+			dgvClients.Visible = true;
+			LaboratoryEntities db = new LaboratoryEntities();
+			dgvClients.DataSource = db.Clients.ToList<Client>(); //---------------- TABLE CLIENTS------------------------
 		}
 
-        private void btnBackToMenu_Click(object sender, EventArgs e)
-        {
+		private void btnBackToMenu_Click(object sender, EventArgs e)
+        {				
 			panelBtnClients.Visible = false;
 			panelMainMenu.Visible = true;
-			panelClientsSearch.Visible = false;	
+			panelClientsSearch.Visible = false;
+
+			dgvClients.Visible = false;
 		}
 
         private async void btnAddNewClient_Click(object sender, EventArgs e)
@@ -95,14 +102,14 @@ namespace TestDBapp
 
 		void LoadData()
         {
-			LaboratoryEntities db = new LaboratoryEntities();
+            LaboratoryEntities db = new LaboratoryEntities();
 			dgvServices.DataSource = db.Services.ToList<Service>();
 
 
-			/*using(LaboratoryEntities db = new LaboratoryEntities())
+			/*using (LaboratoryEntities db = new LaboratoryEntities())
             {
-				dgvServices.DataSource = db.Services.ToList<Service>();
+                dgvServices.DataSource = db.Services.ToList<Service>();
             }*/
 		}
-    }
+	}
 }
