@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="696ceebc4e5c466a9feaac75beffe0db" Name="Diagram1">
+        <EntityTypeShape EntityType="LaboratoryModel.sysdiagram" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.AccessLevel" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.Account" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.Analyzer" Width="1.5" PointX="10.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.Client" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.Employe" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.FinancialDep" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.InsuranceСompanies" Width="1.5" PointX="3.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.Order" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LaboratoryModel.Service" Width="1.5" PointX="6" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbAccount__FK_Ac__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbClients__FK_Ac__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbEmploye__FK_Em__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbAnalyze__FK_An__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbAnalyze__FK_An__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbClients__FK_Cl__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbOrders__FK_Cli__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbFinanci__FK_Em__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbFinanci__FK_Co__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="LaboratoryModel.FK__tbOrders__FK_Ord__38996AB5" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

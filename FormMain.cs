@@ -88,13 +88,27 @@ namespace TestDBapp
 			formLogIn.Show();
 		}
 
-        private async void btnClients_Click(object sender, EventArgs e)
+        private void btnClients_Click(object sender, EventArgs e)
+        {
+			panelMainMenu.Visible = false;
+			panelClientsSearch.Visible = true;
+			panelBtnClients.Visible = true;
+		}
+
+        private void btnBackToMenu_Click(object sender, EventArgs e)
+        {
+			panelBtnClients.Visible = false;
+			panelMainMenu.Visible = true;
+			panelClientsSearch.Visible = false;	
+		}
+
+        private async void btnAddNewClient_Click(object sender, EventArgs e)
         {
 			await Task.Run(() => { Thread.Yield(); });
-			FormClients formClients = new FormClients();
-			formClients.Show();
+			FormViewClientData formAddNewClientData = new FormViewClientData();
+			formAddNewClientData.Show();
 		}
-	}
+    }
 }
 
 /*

@@ -322,7 +322,6 @@ namespace DataBaseApp
             this.Name = "FormLogIn";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
-            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormLogIn_FormClosed);
             this.Load += new System.EventHandler(this.FormLogIn_Load);
             this.panelAllElements.ResumeLayout(false);
