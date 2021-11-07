@@ -126,21 +126,19 @@ namespace TestDBapp
 			}
 		}
 
-        public async void dgvAccounts_DoubleClick(object sender, EventArgs e)
-        {	
-			if(dgvClients.CurrentRow.Index != 1)
-            {
+        private async void dgvClients_DoubleClick(object sender, EventArgs e)
+        {
+			if (dgvClients.CurrentRow.Index != -1)
+			{
 				client.PK_ClientPassport = Convert.ToInt32(dgvClients.CurrentRow.Cells["PK_ClientPassport"].Value);
 				using (LaboratoryEntities db = new LaboratoryEntities())
 				{
 					client = db.Clients.Where(x => x.PK_ClientPassport == client.PK_ClientPassport).FirstOrDefault();
-
-					await Task.Run(() => { Thread.Yield(); });
-					FormViewClientData formAddNewClientData = new FormViewClientData();
-					formAddNewClientData.Show();
 				}
+				await Task.Run(() => { Thread.Yield(); });
+				FormViewClientData formAddNewClientData = new FormViewClientData();
+				formAddNewClientData.Show();
 			}
-			
 		}
     }
 }
