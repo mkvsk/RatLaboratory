@@ -12,6 +12,7 @@ using RAT_Lab;
 using static RAT_Lab.DataBank;
 using DataBaseApp;
 using System.Threading;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestDBapp
 {
@@ -20,7 +21,6 @@ namespace TestDBapp
 		//private int idToChange;
 
 		Service service = new Service();
-		Client client = new Client();
 
 		public FormMain()
 		{
@@ -42,24 +42,6 @@ namespace TestDBapp
 			LoadData();
 		}
 
-		private void activeAbonentsCount()
-        {
-			/*int counter = 0;
-			DataGridViewCheckBoxColumn activityCol = new DataGridViewCheckBoxColumn();
-			activityCol.FalseValue = false;
-
-			foreach(DataGridViewRow row in dataGridView.Rows)
-            {
-				object value = row.Cells[3].Value;
-				
-				if (value != null && (Boolean)value)
-                {
-					counter++;
-                }
-            }
-			textBoxActive.Text = counter.ToString();*/
-		}
-
         private void buttonLogout_Click(object sender, EventArgs e)
         {
 			this.Hide();
@@ -70,25 +52,13 @@ namespace TestDBapp
         private void btnClients_Click(object sender, EventArgs e)
         {
 			panelMainMenu.Visible = false;
-			panelClientsSearch.Visible = true;
 			panelBtnClients.Visible = true;
-
-			dgvClients.Visible = true;
-			dgvClients.AutoGenerateColumns = false;
-			using (LaboratoryEntities db = new LaboratoryEntities())
-            {
-				dgvClients.DataSource = db.Clients.ToList<Client>();
-				textBoxTotal.Text = Convert.ToString(db.Clients.Count());
-			}
 		}
 
 		private void btnBackToMenu_Click(object sender, EventArgs e)
         {				
 			panelBtnClients.Visible = false;
 			panelMainMenu.Visible = true;
-			panelClientsSearch.Visible = false;
-
-			dgvClients.Visible = false;
 
 			if (panelAccounts.Visible)
             {
@@ -97,16 +67,10 @@ namespace TestDBapp
 			}
 		}
 
-        private async void btnAddNewClient_Click(object sender, EventArgs e)
-        {
-			await Task.Run(() => { Thread.Yield(); });
-			FormViewClientData formAddNewClientData = new FormViewClientData();
-			formAddNewClientData.Show();
-		}
 
 		void LoadData()
         {
-			dgvClients.AutoGenerateColumns = false;
+			dgvServices.AutoGenerateColumns = false;
             using (LaboratoryEntities db = new LaboratoryEntities())
             {
                 dgvServices.DataSource = db.Services.ToList<Service>();
@@ -123,21 +87,6 @@ namespace TestDBapp
 			using (LaboratoryEntities db = new LaboratoryEntities())
 			{
 				dgvAccounts.DataSource = db.Accounts.ToList<Account>();
-			}
-		}
-
-        private async void dgvClients_DoubleClick(object sender, EventArgs e)
-        {
-			if (dgvClients.CurrentRow.Index != -1)
-			{
-				client.PK_ClientPassport = Convert.ToInt32(dgvClients.CurrentRow.Cells["PK_ClientPassport"].Value);
-				using (LaboratoryEntities db = new LaboratoryEntities())
-				{
-					client = db.Clients.Where(x => x.PK_ClientPassport == client.PK_ClientPassport).FirstOrDefault();
-				}
-				await Task.Run(() => { Thread.Yield(); });
-				FormViewClientData formAddNewClientData = new FormViewClientData();
-				formAddNewClientData.Show();
 			}
 		}
     }

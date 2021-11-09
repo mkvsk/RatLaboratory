@@ -181,11 +181,11 @@
     <Compile Include="FinancialDep.cs">
       <DependentUpon>DBLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="FormViewClientData.cs">
+    <Compile Include="FormClients.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormViewClientData.Designer.cs">
-      <DependentUpon>FormViewClientData.cs</DependentUpon>
+    <Compile Include="FormClients.Designer.cs">
+      <DependentUpon>FormClients.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogIn.cs">
       <SubType>Form</SubType>
@@ -219,8 +219,8 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>DBLab.tt</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FormViewClientData.resx">
-      <DependentUpon>FormViewClientData.cs</DependentUpon>
+    <EmbeddedResource Include="FormClients.resx">
+      <DependentUpon>FormClients.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogIn.resx">
       <DependentUpon>FormLogIn.cs</DependentUpon>
