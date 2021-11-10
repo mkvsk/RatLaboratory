@@ -28,6 +28,16 @@ namespace DataBaseApp
 		{
 			InitializeComponent();
 		}
+/*
+		private void search()
+        {
+			string searchData = txtSearch.Text.Trim();
+			using (LaboratoryEntities db = new LaboratoryEntities())
+			{
+				dgvClients.DataSource = db.Clients.Where(client => client.ClientFullName.Contains(searchData)).ToList();
+
+			}
+		}*/
 
 		private void buttonNextStep_diactivate()
 		{
@@ -46,15 +56,21 @@ namespace DataBaseApp
 			if (stepNumber == 1)
 			{	
 				username = textBoxDataToEnter.Text;
-				searchAccount();
+				
+				string searchData = textBoxDataToEnter.Text.Trim();
+				using (LaboratoryEntities db = new LaboratoryEntities())
+				{
+					db.Accounts.Where(account => account.UQ_AccountLogin.Contains(searchData)).ToList();
+					searchData = model.UQ_AccountLogin;
+				}
 
-				if ((!(username.Equals(USERNAME_P)) || (username.Equals(INFO_ENTER_USERNAME))))
+				if ((!(username.Equals(searchData)) || (username.Equals(INFO_ENTER_USERNAME))))
 				{
 					textBoxDataToEnter.Text = ERROR_TRY_AGAIN;
 					textBoxDataToEnter.ForeColor = darkRed;
 					buttonNextStep_diactivate();
 				}
-				else if (username.Equals(USERNAME_P))
+				else if (username.Equals(searchData))
 				{
 					username = textBoxDataToEnter.Text;
 
@@ -93,18 +109,6 @@ namespace DataBaseApp
 					stepNumber = 2;
 				}
 			}
-		}
-
-		void searchAccount()
-        {	
-			
-			/*using (LaboratoryEntities db = new LaboratoryEntities())
-            {
-				object tmp = db.Accounts.FindAsync(model.UQ_AccountLogin.Equals(username));
-				USERNAME_P = tmp.ToString();
-				//model.UQ_AccountLogin 
-			}*/
-
 		}
 
 		private void showOrHidePassChar()

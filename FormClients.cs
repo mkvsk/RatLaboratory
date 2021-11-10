@@ -17,7 +17,7 @@ namespace RAT_Lab
 {
     public partial class FormClients : Form
     {
-        Client client = new Client();
+        public Client client = new Client();
 
         public FormClients()
         {
@@ -32,10 +32,10 @@ namespace RAT_Lab
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            clearTxt();
+            ClearTxt();
         }
 
-        void clearTxt()
+        private void ClearTxt()
         {
             txtPassport.Text = string.Empty;
             txtFullName.Text = string.Empty;
@@ -46,6 +46,9 @@ namespace RAT_Lab
             txtPolicyType.Text = string.Empty;
             txtCompName.Text = string.Empty;
             btnDeleteData.Enabled = false;
+
+            btnSaveData.Text = "SAVE";
+            client.PK_ClientPassport = 0;
         }
 
         private void FormClients_Load(object sender, EventArgs e)
@@ -64,23 +67,22 @@ namespace RAT_Lab
         }
 
         private void btnSaveData_Click(object sender, EventArgs e)
-        {   
+        {
             client.PK_ClientPassport = (int)long.Parse(txtPassport.Text);
             client.FK_AccessLevel = 0;
-            client.ClientFullName = txtFullName.Text.Trim();
-            
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-CA");           
-            string dateDOB = txtDOB.Text;
-            client.ClientDateOfBirth = DateTime.Parse(dateDOB.Trim());
-            
-            client.ClientPhoneNumber = txtPhoneNumber.Text.Trim();
-            client.ClientEmail = txtClientEmail.Text.Trim();
+            client.ClientFullName = txtFullName.Text;
+
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-CA");            
+            //client.ClientDateOfBirth = DateTime.Parse(txtDOB.Text);
+
+            client.ClientPhoneNumber = txtPhoneNumber.Text;
+            client.ClientEmail = txtClientEmail.Text;
             client.UQ_ClientInsurancePolicyNumb = (int)long.Parse(txtINN.Text);
-            client.ClientInsurancePolicyType = txtPolicyType.Text.Trim();
+            client.ClientInsurancePolicyType = txtPolicyType.Text;
             //client.FK_ClientInsuranceCompany = txtCompName.Text.Trim();
-            
-            using (LaboratoryEntities db = new LaboratoryEntities())
-            {   
+
+/*            using (LaboratoryEntities db = new LaboratoryEntities())
+            {
                 if (client.PK_ClientPassport == 0)
                 {
                     db.Clients.Add(client);
@@ -91,7 +93,14 @@ namespace RAT_Lab
                 }
                 db.SaveChanges();
             }
-            clearTxt();
+*/
+            using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+                db.Clients.Add(client);
+                db.SaveChanges();
+            }
+
+            ClearTxt();
             MessageBox.Show("Submitted Successfully");
             LoadClientsData();
             panelCRUD.Visible = false;
@@ -131,26 +140,15 @@ namespace RAT_Lab
         private void btnAddNewClient_Click(object sender, EventArgs e)
         {
             panelCRUD.Visible = true;
-            clearTxt();
+            ClearTxt();
             btnSaveData.Text = "SAVE";
             btnDeleteData.Enabled = false;
-            btnEditData.Enabled = false;
             btnClear.Enabled = false;
         }
 
         private void textBoxes_TextChanged(object sender, EventArgs e)
         {
             btnClear.Enabled = true;
-
-            if (txtDOB.Text.Length == 2)
-            {
-                txtDOB.Text += "/";
-                
-            }
-            if (txtDOB.Text.Length == 5)
-            {
-                txtDOB.Text += "/";
-            }
         }
 
         private void btnClosePanelAdd_Click(object sender, EventArgs e)
@@ -161,6 +159,55 @@ namespace RAT_Lab
         private void btnReloadTable_Click(object sender, EventArgs e)
         {
             LoadClientsData();
+        }
+
+        private void btnDeleteData_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure?", "Message", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                using (LaboratoryEntities db = new LaboratoryEntities())
+                {
+                    var entry = db.Entry(client);
+                    if (entry.State == EntityState.Detached)
+                    {
+                        db.Clients.Attach(client);
+                        db.Clients.Remove(client);
+                        db.SaveChanges();
+                        LoadClientsData();
+                        ClearTxt();
+                        MessageBox.Show("Client deleted");
+                    }
+                }
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSearsh.Focus();
+                btnSearsh_Click(sender, e);
+            }
+        }
+
+        private void btnSearsh_Click(object sender, EventArgs e)
+        {
+            string searchData = txtSearch.Text.Trim();
+            using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+                dgvClients.DataSource = db.Clients.Where(client => client.ClientFullName.Contains(searchData)).ToList();
+            }
+        }
+
+        private void txtDOB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!((e.KeyChar >= '0' && e.KeyChar <= '9')
+               || e.KeyChar == '/' 
+               || e.KeyChar == '.'
+               || e.KeyChar == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using System.Data.Entity;
 using RAT_Lab;
 using static RAT_Lab.DataBank;
 using DataBaseApp;
@@ -21,7 +21,7 @@ namespace TestDBapp
 		//private int idToChange;
 
 		Service service = new Service();
-
+		Account account = new Account();
 		public FormMain()
 		{
 			InitializeComponent();
@@ -39,7 +39,8 @@ namespace TestDBapp
 			//labelSpeciality.Text = DataBank.username;
 			//labelFullName.Text = DataBank.password;
 
-			LoadData();
+			LoadServices();
+			ClearTxt();
 		}
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -51,14 +52,15 @@ namespace TestDBapp
 
         private void btnClients_Click(object sender, EventArgs e)
         {
-			panelMainMenu.Visible = false;
-			panelBtnClients.Visible = true;
+			FormClients formClients = new FormClients();
+			formClients.Show();			
 		}
 
 		private void btnBackToMenu_Click(object sender, EventArgs e)
         {				
-			panelBtnClients.Visible = false;
+			btnBackToMenu.Enabled = false;
 			panelMainMenu.Visible = true;
+			dgvServices.Visible = true;
 
 			if (panelAccounts.Visible)
             {
@@ -67,8 +69,15 @@ namespace TestDBapp
 			}
 		}
 
+		private void LoadAccounts()
+        {
+			using (LaboratoryEntities db = new LaboratoryEntities())
+			{
+				dgvAccounts.DataSource = db.Accounts.ToList<Account>();
+			}
+		}
 
-		void LoadData()
+		private void LoadServices()
         {
 			dgvServices.AutoGenerateColumns = false;
             using (LaboratoryEntities db = new LaboratoryEntities())
@@ -79,15 +88,75 @@ namespace TestDBapp
 
         private void btnAccounts_Click(object sender, EventArgs e)
         {
+			btnBackToMenu.Enabled = true;
+
 			panelAccounts.Visible = true;
 			dgvServices.Visible = false;
 
 			dgvAccounts.Visible = true;
 			dgvAccounts.AutoGenerateColumns = false;
+
+			LoadAccounts();
+		}
+
+
+		private void ClearTxt()
+		{
+			txtIP.Text = string.Empty;
+			txtID.Text = string.Empty;
+			txtAccessLvl.Text = string.Empty;
+			txtLogin.Text = string.Empty;
+			txtPass.Text = string.Empty;
+			txtWasOnline.Text = string.Empty;
+			
+
+			btnSave.Text = "SAVE";
+			account.PK_AccountId = 0;
+		}
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+			account.PK_AccountId = int.Parse(txtID.Text);
+			//account.tbAccessLevel = Parse(txtAccessLvl.Text);
+			account.UQ_AccountLogin = txtLogin.Text;
+			account.AccountPass = txtPass.Text;
+			account.AccountIpAddress = txtPass.Text;
+			account.AccountLastEnter = DateTime.Parse(txtWasOnline.Text);
+
 			using (LaboratoryEntities db = new LaboratoryEntities())
 			{
-				dgvAccounts.DataSource = db.Accounts.ToList<Account>();
+				db.Accounts.Add(account);
+				db.SaveChanges();
+			}
+			ClearTxt();
+			MessageBox.Show("SAVED");
+		}
+
+        private void dgvAccounts_DoubleClick(object sender, EventArgs e)
+        {
+			panelCRUD.Visible = true;
+			if (dgvAccounts.CurrentRow.Index != -1)
+			{
+				account.PK_AccountId = Convert.ToInt32(dgvAccounts.CurrentRow.Cells["PK_AccountId"].Value);
+				using (LaboratoryEntities db = new LaboratoryEntities())
+				{
+					account = db.Accounts.Where(x => x.PK_AccountId == account.PK_AccountId).FirstOrDefault();
+					
+					txtID.Text = account.PK_AccountId.ToString();
+					txtAccessLvl.Text = account.FK_AccountAccessLevel.ToString();
+					txtLogin.Text = account.UQ_AccountLogin;
+					txtPass.Text = account.AccountPass;
+					txtIP.Text = account.AccountIpAddress;
+					txtWasOnline.Text = account.AccountLastEnter.ToString();
+				}
+				btnSave.Text = "UPDATE";
+				btnDelete.Enabled = true;
 			}
 		}
+
+        private void btnCloseRowAccount_Click(object sender, EventArgs e)
+        {
+			panelCRUD.Visible = false;
+        }
     }
 }
