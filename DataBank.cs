@@ -19,8 +19,8 @@ namespace RAT_Lab
 		public static string INFO_ENTER_PASSWORD = "enter password";
 		public static string ENTER_CAPTCHA_HERE = "enter captcha here";
 
-		public static string username = "";
-		public static string password = "";
+		public static string username;
+		public static string password;
 
 		public static readonly Color darkRed = Color.FromArgb(224, 96, 85);
 		public static readonly Color basicBlue = Color.FromArgb(33, 150, 243);

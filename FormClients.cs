@@ -195,7 +195,7 @@ namespace RAT_Lab
             string searchData = txtSearch.Text.Trim();
             using (LaboratoryEntities db = new LaboratoryEntities())
             {
-                dgvClients.DataSource = db.Clients.Where(client => client.ClientFullName.Contains(searchData)).ToList();
+                dgvClients.DataSource = db.Clients.Where(client => client.ClientFullName.Contains(searchData)).ToList();                
             }
         }
 

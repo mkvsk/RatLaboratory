@@ -21,25 +21,15 @@ namespace DataBaseApp
 		private int stepNumber = 1;
 		private int loginAttempt = 0;
 		bool canSeePass = false;
-
-		Account model = new Account();
+		
+		Account account = new Account();
 
 		public FormLogIn()
 		{
 			InitializeComponent();
 		}
-/*
-		private void search()
-        {
-			string searchData = txtSearch.Text.Trim();
-			using (LaboratoryEntities db = new LaboratoryEntities())
-			{
-				dgvClients.DataSource = db.Clients.Where(client => client.ClientFullName.Contains(searchData)).ToList();
 
-			}
-		}*/
-
-		private void buttonNextStep_diactivate()
+        private void buttonNextStep_diactivate()
 		{
 			buttonNextStep.Enabled = false;
 			buttonNextStep.BackColor = colorButtonDiactivateBG;
@@ -56,21 +46,14 @@ namespace DataBaseApp
 			if (stepNumber == 1)
 			{	
 				username = textBoxDataToEnter.Text;
-				
-				string searchData = textBoxDataToEnter.Text.Trim();
-				using (LaboratoryEntities db = new LaboratoryEntities())
-				{
-					db.Accounts.Where(account => account.UQ_AccountLogin.Contains(searchData)).ToList();
-					searchData = model.UQ_AccountLogin;
-				}
 
-				if ((!(username.Equals(searchData)) || (username.Equals(INFO_ENTER_USERNAME))))
+				if ((!(username.Equals(USERNAME_P)) || (username.Equals(INFO_ENTER_USERNAME))))
 				{
 					textBoxDataToEnter.Text = ERROR_TRY_AGAIN;
 					textBoxDataToEnter.ForeColor = darkRed;
 					buttonNextStep_diactivate();
 				}
-				else if (username.Equals(searchData))
+				else if (username.Equals(USERNAME_P))
 				{
 					username = textBoxDataToEnter.Text;
 

@@ -14,12 +14,11 @@ using DataBaseApp;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace TestDBapp
 {
 	public partial class FormMain : Form
 	{	
-		//private int idToChange;
-
 		Service service = new Service();
 		Account account = new Account();
 		public FormMain()
@@ -104,7 +103,7 @@ namespace TestDBapp
 		{
 			txtIP.Text = string.Empty;
 			txtID.Text = string.Empty;
-			txtAccessLvl.Text = string.Empty;
+			textBox3.Text = string.Empty;
 			txtLogin.Text = string.Empty;
 			txtPass.Text = string.Empty;
 			txtWasOnline.Text = string.Empty;
@@ -117,7 +116,7 @@ namespace TestDBapp
         private void btnSave_Click(object sender, EventArgs e)
         {
 			account.PK_AccountId = int.Parse(txtID.Text);
-			//account.tbAccessLevel = Parse(txtAccessLvl.Text);
+			//account.tbAccessLevel = lbAccessLvl.Items;
 			account.UQ_AccountLogin = txtLogin.Text;
 			account.AccountPass = txtPass.Text;
 			account.AccountIpAddress = txtPass.Text;
@@ -125,7 +124,14 @@ namespace TestDBapp
 
 			using (LaboratoryEntities db = new LaboratoryEntities())
 			{
-				db.Accounts.Add(account);
+				if (btnSave.Text == "UPDATE")
+                {
+					db.Entry(account).State = (System.Data.Entity.EntityState)Microsoft.EntityFrameworkCore.EntityState.Modified;
+				}
+				if(btnSave.Text == "SAVE")
+                {
+					db.Accounts.Add(account);
+				}
 				db.SaveChanges();
 			}
 			ClearTxt();
@@ -143,7 +149,7 @@ namespace TestDBapp
 					account = db.Accounts.Where(x => x.PK_AccountId == account.PK_AccountId).FirstOrDefault();
 					
 					txtID.Text = account.PK_AccountId.ToString();
-					txtAccessLvl.Text = account.FK_AccountAccessLevel.ToString();
+					textBox3.Text = account.FK_AccountAccessLevel.ToString();
 					txtLogin.Text = account.UQ_AccountLogin;
 					txtPass.Text = account.AccountPass;
 					txtIP.Text = account.AccountIpAddress;
