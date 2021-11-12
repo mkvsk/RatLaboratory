@@ -29,6 +29,8 @@ namespace RAT_Lab
 		public static readonly Color darkGrey = Color.FromArgb(73, 80, 87); //темно-серый цвет лейблов
 
 		public static readonly Color colorButtonActivateBG = Color.FromArgb(33, 150, 243); 
-		public static readonly Color colorButtonDiactivateBG = Color.FromArgb(108, 117, 125);	
+		public static readonly Color colorButtonDiactivateBG = Color.FromArgb(108, 117, 125);
+		
+		public static string menuSection = "services";
 	}
 }

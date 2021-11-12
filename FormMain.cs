@@ -12,7 +12,6 @@ using RAT_Lab;
 using static RAT_Lab.DataBank;
 using DataBaseApp;
 using System.Threading;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace TestDBapp
@@ -21,6 +20,13 @@ namespace TestDBapp
 	{	
 		Service service = new Service();
 		Account account = new Account();
+
+		AccessLevel accessLevel = new AccessLevel();
+		InsuranceСompanies insurance = new InsuranceСompanies();
+		FinancialDep financial = new FinancialDep();
+		Analyzer analyzer = new Analyzer();
+		Order order = new Order();
+
 		public FormMain()
 		{
 			InitializeComponent();
@@ -56,25 +62,10 @@ namespace TestDBapp
 		}
 
 		private void btnBackToMenu_Click(object sender, EventArgs e)
-        {				
-			btnBackToMenu.Enabled = false;
-			panelMainMenu.Visible = true;
-			dgvServices.Visible = true;
-
-			if (panelAccounts.Visible)
-            {
-				panelAccounts.Visible = false;
-				dgvAccounts.Visible = false;
-			}
-		}
-
-		private void LoadAccounts()
         {
-			using (LaboratoryEntities db = new LaboratoryEntities())
-			{
-				dgvAccounts.DataSource = db.Accounts.ToList<Account>();
-			}
+			btnServices_Click(sender, e);
 		}
+
 
 		private void LoadServices()
         {
@@ -85,9 +76,30 @@ namespace TestDBapp
             }
         }
 
-        private void btnAccounts_Click(object sender, EventArgs e)
+		private void LoadAccounts()
         {
+			dgvAccounts.AutoGenerateColumns = false;
+			using (LaboratoryEntities db = new LaboratoryEntities())
+			{
+				dgvAccounts.DataSource = db.Accounts.ToList<Account>();
+			}
+		}
+
+		private void LoadAccessLevels()
+		{
+			//dgv.AutoGenerateColumns = false;
+			using (LaboratoryEntities db = new LaboratoryEntities())
+			{
+				//dgv.DataSource = db.AccessLevels.ToList<AccessLevel>();
+			}
+		}
+
+		private void btnAccounts_Click(object sender, EventArgs e)
+        {
+			menuSection = "accounts";
+
 			btnBackToMenu.Enabled = true;
+			btnAddNew.Visible = true;
 
 			panelAccounts.Visible = true;
 			dgvServices.Visible = false;
@@ -107,26 +119,30 @@ namespace TestDBapp
 			txtLogin.Text = string.Empty;
 			txtPass.Text = string.Empty;
 			txtWasOnline.Text = string.Empty;
-			
+			btnSave.Enabled = false;
 
 			btnSave.Text = "SAVE";
-			account.PK_AccountId = 0;
 		}
 
         private void btnSave_Click(object sender, EventArgs e)
         {
 			account.PK_AccountId = int.Parse(txtID.Text);
+			
+			if (!(lbAccessLvl.SelectedIndex.Equals(-1)))
+            {
+				account.tbAccessLevel = int.Parse(lbAccessLvl.SelectedItem.ToString());
+			}
 			//account.tbAccessLevel = lbAccessLvl.Items;
 			account.UQ_AccountLogin = txtLogin.Text;
 			account.AccountPass = txtPass.Text;
 			account.AccountIpAddress = txtPass.Text;
-			account.AccountLastEnter = DateTime.Parse(txtWasOnline.Text);
+			account.AccountLastEnter = dtpWasOnline.Value;
 
 			using (LaboratoryEntities db = new LaboratoryEntities())
 			{
 				if (btnSave.Text == "UPDATE")
                 {
-					db.Entry(account).State = (System.Data.Entity.EntityState)Microsoft.EntityFrameworkCore.EntityState.Modified;
+					db.Entry(account).State = EntityState.Modified;
 				}
 				if(btnSave.Text == "SAVE")
                 {
@@ -134,13 +150,16 @@ namespace TestDBapp
 				}
 				db.SaveChanges();
 			}
+			LoadAccounts();
 			ClearTxt();
 			MessageBox.Show("SAVED");
+			panelCRUDaccounts.Visible = false;
 		}
 
         private void dgvAccounts_DoubleClick(object sender, EventArgs e)
         {
-			panelCRUD.Visible = true;
+			btnSave.Text = "UPDATE";
+			panelCRUDaccounts.Visible = true;
 			if (dgvAccounts.CurrentRow.Index != -1)
 			{
 				account.PK_AccountId = Convert.ToInt32(dgvAccounts.CurrentRow.Cells["PK_AccountId"].Value);
@@ -149,20 +168,95 @@ namespace TestDBapp
 					account = db.Accounts.Where(x => x.PK_AccountId == account.PK_AccountId).FirstOrDefault();
 					
 					txtID.Text = account.PK_AccountId.ToString();
-					textBox3.Text = account.FK_AccountAccessLevel.ToString();
+					lbAccessLvl.SelectedItem = account.FK_AccountAccessLevel.ToString();
 					txtLogin.Text = account.UQ_AccountLogin;
 					txtPass.Text = account.AccountPass;
 					txtIP.Text = account.AccountIpAddress;
-					txtWasOnline.Text = account.AccountLastEnter.ToString();
+					dtpWasOnline.Value = (DateTime)account.AccountLastEnter;
 				}
-				btnSave.Text = "UPDATE";
 				btnDelete.Enabled = true;
 			}
 		}
 
         private void btnCloseRowAccount_Click(object sender, EventArgs e)
         {
-			panelCRUD.Visible = false;
+			panelCRUDaccounts.Visible = false;
         }
+
+        private void btnAddNewAccount_Click(object sender, EventArgs e)
+        {
+			ClearTxt();
+			panelCRUDaccounts.Visible = true;
+		}
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+			if (MessageBox.Show("Are you sure?", "Message", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			{
+				using (LaboratoryEntities db = new LaboratoryEntities())
+				{
+					var entry = db.Entry(account);
+					if (entry.State == EntityState.Detached)
+					{
+						db.Accounts.Attach(account);
+						db.Accounts.Remove(account);
+						db.SaveChanges();
+						LoadAccounts(); 
+						ClearTxt();
+						MessageBox.Show("Account deleted");
+					}
+				}
+			}
+			panelCRUDaccounts.Visible = false;
+		}
+
+        private void btnServices_Click(object sender, EventArgs e)
+        {
+			menuSection = "services";
+			btnBackToMenu.Enabled = false;
+			btnAddNew.Visible = false;
+			panelMainMenu.Visible = true;
+			dgvServices.Visible = true;
+			LoadServices();
+
+			if (panelAccounts.Visible)
+			{
+				panelAccounts.Visible = false;
+				panelCRUDaccounts.Visible = false;
+				dgvAccounts.Visible = false;
+			}
+		}
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+			if (menuSection == "services")
+			{
+				LoadServices();
+			}
+			if (menuSection == "accounts")
+            {
+				LoadAccounts();
+			}
+			if(menuSection == "access")
+            {
+
+            }
+			if (menuSection == "unsurance")
+			{
+
+			}
+			if (menuSection == "reports")
+			{
+
+			}
+			if (menuSection == "analyzer")
+			{
+
+			}
+			if (menuSection == "orders")
+			{
+
+			}
+		}
     }
 }

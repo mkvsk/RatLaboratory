@@ -70,39 +70,29 @@ namespace RAT_Lab
         {
             client.PK_ClientPassport = (int)long.Parse(txtPassport.Text);
             client.FK_AccessLevel = 0;
-            client.ClientFullName = txtFullName.Text;
-
-            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-CA");            
-            //client.ClientDateOfBirth = DateTime.Parse(txtDOB.Text);
-
+            client.ClientFullName = txtFullName.Text;        
+            client.ClientDateOfBirth = dtpDOB.Value;
             client.ClientPhoneNumber = txtPhoneNumber.Text;
             client.ClientEmail = txtClientEmail.Text;
             client.UQ_ClientInsurancePolicyNumb = (int)long.Parse(txtINN.Text);
             client.ClientInsurancePolicyType = txtPolicyType.Text;
-            //client.FK_ClientInsuranceCompany = txtCompName.Text.Trim();
+            //client.FK_ClientInsuranceCompany = txtCompName.Text;
 
-/*            using (LaboratoryEntities db = new LaboratoryEntities())
+            using (LaboratoryEntities db = new LaboratoryEntities())
             {
-                if (client.PK_ClientPassport == 0)
-                {
-                    db.Clients.Add(client);
-                }
-                else
+                if (btnSaveData.Text == "UPDATE")
                 {
                     db.Entry(client).State = EntityState.Modified;
                 }
+                if (btnSaveData.Text == "SAVE")
+                {
+                    db.Clients.Add(client);
+                }
                 db.SaveChanges();
             }
-*/
-            using (LaboratoryEntities db = new LaboratoryEntities())
-            {
-                db.Clients.Add(client);
-                db.SaveChanges();
-            }
-
+            LoadClientsData();
             ClearTxt();
             MessageBox.Show("Submitted Successfully");
-            LoadClientsData();
             panelCRUD.Visible = false;
         }
 
@@ -117,8 +107,7 @@ namespace RAT_Lab
                     client = db.Clients.Where(x => x.PK_ClientPassport == client.PK_ClientPassport).FirstOrDefault();
                     txtFullName.Text = client.ClientFullName;
                     
-                    DateTime DOBtoText = (DateTime)client.ClientDateOfBirth;
-                    txtDOB.Text = DOBtoText.ToString();
+                    dtpDOB.Value = (DateTime)client.ClientDateOfBirth;                    
 
                     txtPhoneNumber.Text = client.ClientPhoneNumber;
                     txtClientEmail.Text = client.ClientEmail;
@@ -179,6 +168,7 @@ namespace RAT_Lab
                     }
                 }
             }
+            panelCRUD.Visible = false;
         }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
