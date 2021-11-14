@@ -723,7 +723,7 @@ namespace RAT_Lab
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(73)))), ((int)(((byte)(80)))), ((int)(((byte)(87)))));
-            this.label2.Location = new System.Drawing.Point(190, 27);
+            this.label2.Location = new System.Drawing.Point(193, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(105, 32);
             this.label2.TabIndex = 50;
@@ -954,6 +954,7 @@ namespace RAT_Lab
             this.Controls.Add(this.panelClientsSearch);
             this.Controls.Add(this.ShadowPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormClients";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clients";

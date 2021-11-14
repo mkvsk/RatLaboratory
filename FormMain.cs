@@ -294,16 +294,12 @@ namespace TestDBapp
 			}
 			if (menuSection == "reports")
 			{
-
+				//LoadReports();
 			}
 			if (menuSection == "analyzer")
 			{
-
-			}
-			if (menuSection == "orders")
-			{
-
-			}
+				//LoadAnalyzer();
+			}			
 		}
 
         private void btnAccess_Click(object sender, EventArgs e)
@@ -492,6 +488,13 @@ namespace TestDBapp
 				}
 			}
 			panelCRUDinsurance.Visible = false;
+		}
+
+        private void btnOrders_Click(object sender, EventArgs e)
+        {
+			//menuSection = "orders";
+			FormOrders formOrders = new FormOrders();
+			formOrders.Show();
 		}
     }
 }
