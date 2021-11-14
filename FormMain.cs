@@ -32,12 +32,12 @@ namespace TestDBapp
 			InitializeComponent();
 		}
 
-		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Application.Exit();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		private void FormMain_Load(object sender, EventArgs e)
 		{
 			labelSpeciality.Text = "Department";
 			labelFullName.Text = "EmployeeFullName";
@@ -45,7 +45,7 @@ namespace TestDBapp
 			//labelFullName.Text = DataBank.password;
 
 			LoadServices();
-			ClearTxt();
+			ClearAccountTxt();
 		}
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -65,7 +65,6 @@ namespace TestDBapp
         {
 			btnServices_Click(sender, e);
 		}
-
 
 		private void LoadServices()
         {
@@ -87,78 +86,103 @@ namespace TestDBapp
 
 		private void LoadAccessLevels()
 		{
-			//dgv.AutoGenerateColumns = false;
+			dgvAccessLvls.AutoGenerateColumns = false;
 			using (LaboratoryEntities db = new LaboratoryEntities())
 			{
-				//dgv.DataSource = db.AccessLevels.ToList<AccessLevel>();
+				dgvAccessLvls.DataSource = db.AccessLevels.ToList<AccessLevel>();
 			}
 		}
+
+		private void LoadInsuranceComp()
+        {
+			dgvInsurance.AutoGenerateColumns = false;
+			using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+				dgvInsurance.DataSource = db.InsuranceСompanies.ToList<InsuranceСompanies>();
+            }
+        }
 
 		private void btnAccounts_Click(object sender, EventArgs e)
         {
 			menuSection = "accounts";
 
 			btnBackToMenu.Enabled = true;
+			btnAddNew.Enabled = true;
 			btnAddNew.Visible = true;
 
 			panelAccounts.Visible = true;
 			dgvServices.Visible = false;
-
+			dgvInsurance.Visible = false;
+			
 			dgvAccounts.Visible = true;
-			dgvAccounts.AutoGenerateColumns = false;
 
 			LoadAccounts();
 		}
 
-
-		private void ClearTxt()
+		private void ClearAccountTxt()
 		{
 			txtIP.Text = string.Empty;
 			txtID.Text = string.Empty;
+			lbAccessLvl.SelectedIndex = -1;
 			textBox3.Text = string.Empty;
 			txtLogin.Text = string.Empty;
 			txtPass.Text = string.Empty;
-			txtWasOnline.Text = string.Empty;
-			btnSave.Enabled = false;
+			dtpWasOnline.Value = DateTime.Now;
 
-			btnSave.Text = "SAVE";
+			btnSaveUpdateAccount.Enabled = false;
+			btnClearAccountTxt.Enabled = false; 
+			btnSaveUpdateAccount.Text = "SAVE";
 		}
 
-        private void btnSave_Click(object sender, EventArgs e)
+		private void ClearInsuranceTxt()
+        {
+			txtPKCompName.Text = string.Empty;
+			txtCompAddress.Text = string.Empty;
+			txtCompINN.Text = string.Empty;
+			txtCompBill.Text = string.Empty;
+			txtCompBIK.Text = string.Empty;
+
+			btnSaveUpdateComp.Enabled = false;
+			btnClearCompanyTxt.Enabled = false;
+			btnSaveUpdateComp.Text = "SAVE";
+		}
+
+		private void btnSave_Click(object sender, EventArgs e)
         {
 			account.PK_AccountId = int.Parse(txtID.Text);
 			
 			if (!(lbAccessLvl.SelectedIndex.Equals(-1)))
             {
-				account.tbAccessLevel = int.Parse(lbAccessLvl.SelectedItem.ToString());
+                account.FK_AccountAccessLevel = int.Parse(lbAccessLvl.SelectedItem.ToString());
 			}
-			//account.tbAccessLevel = lbAccessLvl.Items;
 			account.UQ_AccountLogin = txtLogin.Text;
 			account.AccountPass = txtPass.Text;
-			account.AccountIpAddress = txtPass.Text;
+			account.AccountIpAddress = txtIP.Text;
 			account.AccountLastEnter = dtpWasOnline.Value;
 
 			using (LaboratoryEntities db = new LaboratoryEntities())
 			{
-				if (btnSave.Text == "UPDATE")
+				if (btnSaveUpdateAccount.Text == "UPDATE")
                 {
 					db.Entry(account).State = EntityState.Modified;
 				}
-				if(btnSave.Text == "SAVE")
+				if(btnSaveUpdateAccount.Text == "SAVE")
                 {
 					db.Accounts.Add(account);
 				}
 				db.SaveChanges();
 			}
 			LoadAccounts();
-			ClearTxt();
+			ClearAccountTxt();
 			MessageBox.Show("SAVED");
 			panelCRUDaccounts.Visible = false;
 		}
 
         private void dgvAccounts_DoubleClick(object sender, EventArgs e)
         {
-			btnSave.Text = "UPDATE";
+			btnSaveUpdateAccount.Text = "UPDATE";
+			btnClearAccountTxt.Enabled = true;
+			btnSaveUpdateAccount.Enabled = true;
 			panelCRUDaccounts.Visible = true;
 			if (dgvAccounts.CurrentRow.Index != -1)
 			{
@@ -174,7 +198,7 @@ namespace TestDBapp
 					txtIP.Text = account.AccountIpAddress;
 					dtpWasOnline.Value = (DateTime)account.AccountLastEnter;
 				}
-				btnDelete.Enabled = true;
+				btnDeleteAccount.Enabled = true;
 			}
 		}
 
@@ -183,10 +207,19 @@ namespace TestDBapp
 			panelCRUDaccounts.Visible = false;
         }
 
-        private void btnAddNewAccount_Click(object sender, EventArgs e)
-        {
-			ClearTxt();
-			panelCRUDaccounts.Visible = true;
+        private void btnAddNew_Click(object sender, EventArgs e)
+        {	
+			if (menuSection == "accounts")
+            {
+				ClearAccountTxt();
+				panelCRUDaccounts.Visible = true;
+			}
+			if (menuSection == "insurance")
+			{
+				ClearInsuranceTxt();
+				panelCRUDinsurance.Visible = true;
+			}
+			
 		}
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -202,7 +235,7 @@ namespace TestDBapp
 						db.Accounts.Remove(account);
 						db.SaveChanges();
 						LoadAccounts(); 
-						ClearTxt();
+						ClearAccountTxt();
 						MessageBox.Show("Account deleted");
 					}
 				}
@@ -212,19 +245,31 @@ namespace TestDBapp
 
         private void btnServices_Click(object sender, EventArgs e)
         {
-			menuSection = "services";
 			btnBackToMenu.Enabled = false;
 			btnAddNew.Visible = false;
 			panelMainMenu.Visible = true;
 			dgvServices.Visible = true;
 			LoadServices();
 
-			if (panelAccounts.Visible)
+			if (menuSection == "accounts")
 			{
 				panelAccounts.Visible = false;
 				panelCRUDaccounts.Visible = false;
-				dgvAccounts.Visible = false;
+				dgvAccounts.Visible = false;				
 			}
+			if (menuSection == "access")
+			{
+				dgvAccessLvls.Visible = false;
+				txtDescriptionEdit.Visible = false;
+				txtDescriptionEdit.Enabled = false;
+			}
+			if (menuSection == "insurance")
+            {
+				dgvInsurance.Visible = false;
+            }
+			btnAddNew.Visible = false;
+
+			menuSection = "services";
 		}
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -239,11 +284,11 @@ namespace TestDBapp
 			}
 			if(menuSection == "access")
             {
-
+				LoadAccessLevels();
             }
-			if (menuSection == "unsurance")
+			if (menuSection == "insurance")
 			{
-
+				LoadInsuranceComp();
 			}
 			if (menuSection == "reports")
 			{
@@ -258,5 +303,97 @@ namespace TestDBapp
 
 			}
 		}
+
+        private void btnAccess_Click(object sender, EventArgs e)
+        {
+			menuSection = "access";
+
+			btnAddNew.Enabled = false;
+			btnBackToMenu.Enabled = true;
+			dgvAccessLvls.Visible = true;
+			
+			dgvServices.Visible = false;
+			dgvAccounts.Visible = false;
+			dgvInsurance.Visible = false;
+
+			txtDescriptionEdit.Enabled = false;
+			txtDescriptionEdit.Visible = true;
+			LoadAccessLevels();
+		}
+
+        private void dgvAccessLvls_DoubleClick(object sender, EventArgs e)
+        {
+			txtDescriptionEdit.Enabled = true;
+			labelDecript.Visible = true;
+			if (dgvAccessLvls.CurrentRow.Index != -1)
+            {
+				accessLevel.PK_AccessLevel = Convert.ToInt32(dgvAccessLvls.CurrentRow.Cells["PK_AccessLevel"].Value);
+				using (LaboratoryEntities db = new LaboratoryEntities())
+                {
+					accessLevel = db.AccessLevels.Where(x => x.PK_AccessLevel == accessLevel.PK_AccessLevel).FirstOrDefault();
+					txtDescriptionEdit.Text = accessLevel.AccessLevelDescription;
+				}
+			}
+		}
+
+        private void txtDescriptionEdit_KeyDown(object sender, KeyEventArgs e)
+        {
+			if (e.KeyCode == Keys.Enter)
+			{
+				accessLevel.AccessLevelDescription = txtDescriptionEdit.Text;
+				using (LaboratoryEntities db = new LaboratoryEntities())
+                {
+					db.Entry(accessLevel).State = EntityState.Modified;
+					db.SaveChanges();
+                }
+				MessageBox.Show("changes saved");
+				LoadAccessLevels();
+				txtDescriptionEdit.Text = string.Empty;
+				txtDescriptionEdit.Enabled = false;
+			}
+			if(e.KeyCode == Keys.Escape)
+            {
+				txtDescriptionEdit.Text = string.Empty;
+				txtDescriptionEdit.Enabled = false;
+				MessageBox.Show("changes is not saved");
+            }
+            labelDecript.Visible = false;		
+        }
+
+        private void btnInsurance_Click(object sender, EventArgs e)
+        {
+			menuSection = "insurance";
+
+			btnAddNew.Enabled = false;
+			dgvInsurance.Visible = true;
+			btnBackToMenu.Enabled = true;
+
+			dgvAccessLvls.Visible = false;
+			dgvServices.Visible = false;
+			dgvAccounts.Visible = false;
+
+			LoadInsuranceComp();
+		}
+
+        private void dgvInsurance_DoubleClick(object sender, EventArgs e)
+        {
+			panelCRUDinsurance.Visible = true;
+
+
+        }
+
+        private void txtID_TextChanged(object sender, EventArgs e)
+        {
+			btnClearAccountTxt.Enabled = true;
+			if ((txtID.Text == string.Empty)
+				&& (txtLogin.Text == string.Empty)
+				&& (txtPass.Text == string.Empty) 
+				&& (txtIP.Text == string.Empty))
+            {
+				btnClearAccountTxt.Enabled = false;
+            }
+        }
+
+
     }
 }

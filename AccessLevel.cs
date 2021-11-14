@@ -32,10 +32,5 @@ namespace RAT_Lab
         public virtual ICollection<Client> tbClients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employe> tbEmployes { get; set; }
-
-        public static implicit operator AccessLevel(int v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
