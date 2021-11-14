@@ -212,11 +212,13 @@ namespace TestDBapp
 			if (menuSection == "accounts")
             {
 				ClearAccountTxt();
+				btnSaveUpdateAccount.Text = "SAVE";
 				panelCRUDaccounts.Visible = true;
 			}
 			if (menuSection == "insurance")
 			{
 				ClearInsuranceTxt();
+				btnSaveUpdateComp.Text = "SAVE";
 				panelCRUDinsurance.Visible = true;
 			}
 			
@@ -364,7 +366,7 @@ namespace TestDBapp
         {
 			menuSection = "insurance";
 
-			btnAddNew.Enabled = false;
+			btnAddNew.Visible = true;
 			dgvInsurance.Visible = true;
 			btnBackToMenu.Enabled = true;
 
@@ -377,9 +379,24 @@ namespace TestDBapp
 
         private void dgvInsurance_DoubleClick(object sender, EventArgs e)
         {
+			btnSaveUpdateComp.Text = "UPDATE";
 			panelCRUDinsurance.Visible = true;
-
-
+			btnClearCompanyTxt.Enabled = true;
+			btnSaveUpdateComp.Enabled = true;
+			if (dgvInsurance.CurrentRow.Index != -1)
+            {
+				insurance.CompanyINN = Convert.ToInt32(dgvInsurance.CurrentRow.Cells["CompanyINN"].Value);
+				using(LaboratoryEntities db = new LaboratoryEntities())
+                {
+					insurance = db.InsuranceСompanies.Where(x => x.CompanyINN == insurance.CompanyINN).FirstOrDefault();
+					txtPKCompName.Text = insurance.PK_CompanyName;
+					txtCompAddress.Text = insurance.CompanyAddress;
+					txtCompINN.Text = insurance.CompanyINN.ToString();
+					txtCompBill.Text = insurance.CompanyBankBill;
+					txtCompBIK.Text = insurance.CompanyBIK;
+				}
+				btnDeleteComp.Enabled = true;
+			}
         }
 
         private void txtID_TextChanged(object sender, EventArgs e)
@@ -394,6 +411,87 @@ namespace TestDBapp
             }
         }
 
+        private void btnPanelCompClose_Click(object sender, EventArgs e)
+        {
+			panelCRUDinsurance.Visible = false;
 
+        }
+
+        private void btnClearCompanyTxt_Click(object sender, EventArgs e)
+        {
+			ClearInsuranceTxt();
+        }
+
+        private void txtPKCompName_TextChanged(object sender, EventArgs e)
+        {
+			btnClearCompanyTxt.Enabled = true;
+			if ((txtPKCompName.Text == string.Empty)
+				&& (txtCompAddress.Text == string.Empty)
+				&& (txtCompINN.Text == string.Empty)
+				&& (txtCompBill.Text == string.Empty)
+				&& (txtCompBIK.Text == string.Empty))
+			{
+				btnClearCompanyTxt.Enabled = false;
+			}			
+		}
+
+        private void txtPKCompName_Leave(object sender, EventArgs e)
+        {
+			if (txtPKCompName.Text == string.Empty)
+			{
+				btnSaveUpdateComp.Enabled = false;
+			}
+			if (!(txtPKCompName.Text == string.Empty))
+            {
+				btnSaveUpdateComp.Enabled = true;
+			}
+		}
+
+        private void btnSaveUpdateComp_Click(object sender, EventArgs e)
+        {
+			insurance.PK_CompanyName = txtPKCompName.Text;
+			insurance.CompanyAddress = txtCompAddress.Text;
+			insurance.CompanyINN = (int)long.Parse(txtCompINN.Text);
+			insurance.CompanyBankBill = txtCompBill.Text;
+			insurance.CompanyBIK = txtCompBIK.Text;
+
+			using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+				if (btnSaveUpdateComp.Text == "UPDATE")
+				{
+					db.Entry(insurance).State = EntityState.Modified;
+				}
+				if (btnSaveUpdateComp.Text == "SAVE")
+				{
+					db.InsuranceСompanies.Add(insurance);
+				}
+				db.SaveChanges();
+			}
+			LoadInsuranceComp();
+			ClearInsuranceTxt();
+			MessageBox.Show("SAVED");
+			panelCRUDinsurance.Visible = false;
+		}
+
+        private void btnDeleteComp_Click(object sender, EventArgs e)
+        {
+			if (MessageBox.Show("Are you sure?", "Message", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			{
+				using (LaboratoryEntities db = new LaboratoryEntities())
+				{
+					var entry = db.Entry(insurance);
+					if (entry.State == EntityState.Detached)
+					{
+						db.InsuranceСompanies.Attach(insurance);
+						db.InsuranceСompanies.Remove(insurance);
+						db.SaveChanges();
+						LoadInsuranceComp();
+						ClearInsuranceTxt();
+						MessageBox.Show("Company data deleted");
+					}
+				}
+			}
+			panelCRUDinsurance.Visible = false;
+		}
     }
 }
