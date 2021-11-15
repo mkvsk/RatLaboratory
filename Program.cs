@@ -19,10 +19,10 @@ namespace RAT_Lab
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new FormLogIn());
+            Application.Run(new FormLogIn());
             //Application.Run(new FormMain());
             //Application.Run(new FormClients());
-            Application.Run(new FormOrders());
+            //Application.Run(new FormOrders());
         }
     }
 }

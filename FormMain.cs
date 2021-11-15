@@ -37,13 +37,39 @@ namespace TestDBapp
 			Application.Exit();
 		}
 
+		private void LoadEnteredProfile()
+        {
+			string userSpeciality;
+			string userFullName;
+
+			int accAccLvl;
+			int accID;
+
+			using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+				Account account = db.Accounts.FirstOrDefault(l => (l.UQ_AccountLogin == username) && (l.AccountPass == password));
+				accID = account.PK_AccountId;
+				accAccLvl = account.FK_AccountAccessLevel;
+			}
+
+			using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+				Employe employe = db.Employes.FirstOrDefault(n => n.PK_EmployeeId == accID);
+				userFullName = employe.EmployeeFullName;
+			}
+
+			using (LaboratoryEntities db = new LaboratoryEntities())
+            {
+				AccessLevel accessLevel = db.AccessLevels.FirstOrDefault(a => a.PK_AccessLevel == accAccLvl);
+				userSpeciality = accessLevel.UQ_AccessLevelType;
+            }
+			labelSpeciality.Text = userSpeciality;
+			labelFullName.Text = userFullName;
+		}
+
 		private void FormMain_Load(object sender, EventArgs e)
 		{
-			labelSpeciality.Text = "Department";
-			labelFullName.Text = "EmployeeFullName";
-			//labelSpeciality.Text = DataBank.username;
-			//labelFullName.Text = DataBank.password;
-
+			LoadEnteredProfile();
 			LoadServices();
 			ClearAccountTxt();
 		}

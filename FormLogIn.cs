@@ -20,9 +20,7 @@ namespace DataBaseApp
 	{
 		private int stepNumber = 1;
 		private int loginAttempt = 0;
-		bool canSeePass = false;
-		
-		Account account = new Account();
+		bool canSeePass = false;		
 
 		public FormLogIn()
 		{
@@ -40,12 +38,35 @@ namespace DataBaseApp
 			buttonNextStep.Enabled = true;
 			buttonNextStep.BackColor = colorButtonActivateBG;
 		}
+		public void checkLogin()
+        {
+			using (LaboratoryEntities db = new LaboratoryEntities())
+			{
+				Account account = db.Accounts.FirstOrDefault(l => l.UQ_AccountLogin == username);
+				if (account != null)
+				{
+					USERNAME_P = account.UQ_AccountLogin;
+				}
+			}
+		}
 
+		public void checkPass()
+        {
+			using(LaboratoryEntities db = new LaboratoryEntities())
+            {
+				Account account = db.Accounts.FirstOrDefault(l => l.AccountPass == password);
+				if(account != null)
+                {
+					PASSWORD_P = account.AccountPass;
+                }
+            }
+        }
 		private void buttonNextStep_Click(object sender, EventArgs e)
 		{
 			if (stepNumber == 1)
 			{	
-				username = textBoxDataToEnter.Text;
+				username = textBoxDataToEnter.Text;				
+				checkLogin();
 
 				if ((!(username.Equals(USERNAME_P)) || (username.Equals(INFO_ENTER_USERNAME))))
 				{
@@ -72,7 +93,7 @@ namespace DataBaseApp
                 {
 					captcha();
 				}
-
+				checkPass();
 				if (password.Equals(PASSWORD_P))
 				{
 					stepNumber = 3;
