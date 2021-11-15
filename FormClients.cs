@@ -48,7 +48,6 @@ namespace RAT_Lab
             btnDeleteData.Enabled = false;
 
             btnSaveData.Text = "SAVE";
-            client.PK_ClientPassport = 0;
         }
 
         private void FormClients_Load(object sender, EventArgs e)
